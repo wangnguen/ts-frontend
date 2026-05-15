@@ -1,38 +1,30 @@
-import { useCounterStore } from './stores/counterStore'
+import { useEffect } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuthStore } from './stores/authStore'
+import LoginPage from './pages/auth/login'
+import RegisterPage from './pages/auth/register'
+import TwoFactorPage from './pages/auth/two-factor'
+import ForgotPasswordPage from './pages/auth/forgot-password'
+import ResetPasswordPage from './pages/auth/reset-password'
+import VerifyEmailPage from './pages/auth/verify-email'
 
 function App() {
-  const { count, increment, decrement, reset } = useCounterStore()
+  const loadFromStorage = useAuthStore((s) => s.loadFromStorage)
+
+  useEffect(() => {
+    loadFromStorage()
+  }, [loadFromStorage])
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-lg p-10 flex flex-col items-center gap-6">
-        <h1 className="text-3xl font-bold text-gray-800">TS Uptime</h1>
-        <p className="text-gray-500 text-sm">React + TypeScript + Zustand + Tailwind v4</p>
-
-        <div className="text-6xl font-mono font-bold text-indigo-600">{count}</div>
-
-        <div className="flex gap-3">
-          <button
-            onClick={decrement}
-            className="px-5 py-2 rounded-lg bg-red-100 text-red-600 font-semibold hover:bg-red-200 transition-colors"
-          >
-            -
-          </button>
-          <button
-            onClick={reset}
-            className="px-5 py-2 rounded-lg bg-gray-100 text-gray-600 font-semibold hover:bg-gray-200 transition-colors"
-          >
-            Reset
-          </button>
-          <button
-            onClick={increment}
-            className="px-5 py-2 rounded-lg bg-indigo-100 text-indigo-600 font-semibold hover:bg-indigo-200 transition-colors"
-          >
-            +
-          </button>
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/2fa" element={<TwoFactorPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/verify-email" element={<VerifyEmailPage />} />
+    </Routes>
   )
 }
 
