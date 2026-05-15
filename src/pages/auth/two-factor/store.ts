@@ -15,14 +15,14 @@ export const useTwoFactorStore = create<TwoFactorState>((set) => ({
   error: '',
 
   submit: async (otp, navigate) => {
-    const pendingToken = useAuthStore.getState().pendingToken
-    if (!pendingToken) {
+    const { pendingToken, pendingEmail, pendingPassword } = useAuthStore.getState()
+    if (!pendingToken || !pendingEmail || !pendingPassword) {
       set({ error: 'Phiên đăng nhập hết hạn, vui lòng đăng nhập lại' })
       return
     }
     set({ error: '', loading: true })
     try {
-      const res = await authApi.login2FA({ step: '2fa', pendingToken, code: otp })
+      const res = await authApi.login2FA({ email: pendingEmail, password: pendingPassword, pendingToken, code: otp })
       useAuthStore.getState().setAuth(res)
       navigate('/dashboard')
     } catch (err) {

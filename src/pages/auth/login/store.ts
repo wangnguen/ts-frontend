@@ -22,9 +22,9 @@ export const useLoginStore = create<LoginState>((set) => ({
   submit: async (data, navigate) => {
     set({ error: '', loading: true })
     try {
-      const res = await authApi.loginPassword({ step: 'password', email: data.email, password: data.password })
+      const res = await authApi.loginPassword({ email: data.email, password: data.password })
       if ('requiresTwoFactor' in res && res.requiresTwoFactor) {
-        useAuthStore.getState().setPendingToken(res.pendingToken)
+        useAuthStore.getState().setPending2FA(res.pendingToken, data.email, data.password)
         navigate('/2fa')
       } else {
         useAuthStore.getState().setAuth(res as AuthResponse)

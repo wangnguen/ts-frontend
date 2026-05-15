@@ -57,13 +57,13 @@ export interface RegisterRequest {
 // ── Auth — POST /auth/login (oneOf) ──────────────────────────────────────────
 
 export interface LoginPasswordRequest {
-  step: 'password'
   email: string
   password: string       // min 8
 }
 
 export interface Login2FARequest {
-  step: '2fa'
+  email: string
+  password: string
   pendingToken: string
   code: string           // exactly 6 digits
 }

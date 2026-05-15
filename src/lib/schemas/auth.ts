@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/
+const PASSWORD_MESSAGE = 'Mật khẩu cần ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt (@$!%*?&#)'
+
 export const loginSchema = z.object({
   email: z.string().email('Email không hợp lệ'),
   password: z.string().min(1, 'Vui lòng nhập mật khẩu'),
@@ -7,10 +10,10 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
-    fullName: z.string().min(1, 'Vui lòng nhập họ tên'),
+    fullName: z.string().min(1, 'Vui lòng nhập họ tên').max(255, 'Tối đa 255 ký tự'),
     username: z.string().min(3, 'Tên đăng nhập tối thiểu 3 ký tự').max(30, 'Tối đa 30 ký tự'),
     email: z.string().email('Email không hợp lệ'),
-    password: z.string().min(8, 'Mật khẩu tối thiểu 8 ký tự'),
+    password: z.string().min(8, 'Mật khẩu tối thiểu 8 ký tự').regex(PASSWORD_REGEX, PASSWORD_MESSAGE),
     confirmPassword: z.string(),
   })
   .refine((d) => d.password === d.confirmPassword, {
@@ -31,7 +34,7 @@ export const otpSchema = z.object({
 
 export const resetPasswordSchema = z
   .object({
-    password: z.string().min(8, 'Mật khẩu tối thiểu 8 ký tự'),
+    password: z.string().min(8, 'Mật khẩu tối thiểu 8 ký tự').regex(PASSWORD_REGEX, PASSWORD_MESSAGE),
     confirmPassword: z.string(),
   })
   .refine((d) => d.password === d.confirmPassword, {
