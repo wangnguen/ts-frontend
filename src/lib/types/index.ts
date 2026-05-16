@@ -56,7 +56,6 @@ export interface Login2FARequest {
 
 export type LoginRequest = LoginPasswordRequest | Login2FARequest
 
-
 export interface GoogleOAuthUrlResponse {
   url: string
 }

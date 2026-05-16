@@ -18,7 +18,7 @@ export type {
   Confirm2FARequest,
   Disable2FARequest,
   UpdateProfileRequest,
-  ChangePasswordRequest,
+  ChangePasswordRequest
 } from './types'
 
 import { authService } from './services/auth.service'
@@ -38,7 +38,7 @@ export const authApi = {
   googleCallback: (code: string, state: string) => authService.googleCallback({ code, state }),
   setup2FA: authService.setup2FA,
   confirm2FA: (code: string, setUpToken: string) => authService.confirm2FA({ code, setUpToken }),
-  disable2FA: (code: string) => authService.disable2FA({ code }),
+  disable2FA: (code: string) => authService.disable2FA({ code })
 }
 
 export const usersApi = {
@@ -46,7 +46,7 @@ export const usersApi = {
   updateMe: usersService.updateMe,
   changePassword: (currentPassword: string, newPassword: string, confirmPassword: string) =>
     usersService.changePassword({ currentPassword, newPassword, confirmPassword }),
-  deleteAccount: usersService.deleteAccount,
+  deleteAccount: usersService.deleteAccount
 }
 
 export { authService } from './services/auth.service'

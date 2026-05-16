@@ -22,7 +22,7 @@ export class ApiError extends Error {
   constructor(
     public readonly status: number,
     message: string,
-    public readonly data?: unknown,
+    public readonly data?: unknown
   ) {
     super(message)
     this.name = 'ApiError'
@@ -101,6 +101,6 @@ export function applyInterceptors(instance: AxiosInstance): void {
           resolve(axiosInstance(original))
         })
       })
-    },
+    }
   )
 }

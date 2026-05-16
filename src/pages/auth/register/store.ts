@@ -39,5 +39,5 @@ export const useRegisterStore = create<RegisterState>((set) => ({
     }
   },
 
-  reset: () => set({ loading: false, error: '' }),
+  reset: () => set({ loading: false, error: '' })
 }))

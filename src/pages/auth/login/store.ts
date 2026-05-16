@@ -46,5 +46,5 @@ export const useLoginStore = create<LoginState>((set) => ({
     }
   },
 
-  reset: () => set({ loading: false, error: '' }),
+  reset: () => set({ loading: false, error: '' })
 }))

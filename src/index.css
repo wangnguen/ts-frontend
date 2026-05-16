@@ -1,42 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   /* === Claymorphism Light Theme === */
-  --color-bg-from:   #EEF2FF;
-  --color-bg-mid:    #F5F3FF;
-  --color-bg-to:     #FFF0F9;
+  --color-bg-from: #eef2ff;
+  --color-bg-mid: #f5f3ff;
+  --color-bg-to: #fff0f9;
 
-  --color-surface:   #FFFFFF;
-  --color-surface-2: #F8F7FF;
-  --color-border:    rgba(124, 58, 237, 0.12);
-  --color-border-2:  #E5E7EB;
+  --color-surface: #ffffff;
+  --color-surface-2: #f8f7ff;
+  --color-border: rgba(124, 58, 237, 0.12);
+  --color-border-2: #e5e7eb;
 
-  --color-text:      #1E1B4B;
-  --color-text-2:    #3730A3;
-  --color-muted:     #6B7280;
+  --color-text: #1e1b4b;
+  --color-text-2: #3730a3;
+  --color-muted: #6b7280;
 
   /* Status */
-  --color-up:          #10B981;
-  --color-up-hover:    #059669;
-  --color-down:        #EF4444;
-  --color-warning:     #F59E0B;
-  --color-pending:     #3B82F6;
-  --color-maintenance: #A855F7;
+  --color-up: #10b981;
+  --color-up-hover: #059669;
+  --color-down: #ef4444;
+  --color-warning: #f59e0b;
+  --color-pending: #3b82f6;
+  --color-maintenance: #a855f7;
 
   /* Brand */
-  --color-primary:       #7C3AED;
-  --color-primary-hover: #6D28D9;
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
   --color-primary-light: rgba(124, 58, 237, 0.08);
-  --color-secondary:     #F97316;
-  --color-accent:        #EC4899;
+  --color-secondary: #f97316;
+  --color-accent: #ec4899;
 
   /* Clay shadows */
-  --clay-shadow-sm:  0 4px 12px rgba(124,58,237,0.10), 0 2px 4px rgba(0,0,0,0.06);
-  --clay-shadow-md:  0 12px 32px rgba(124,58,237,0.14), 0 4px 12px rgba(0,0,0,0.07);
-  --clay-shadow-lg:  0 24px 56px rgba(124,58,237,0.16), 0 8px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
-  --clay-shadow-btn: 0 8px 24px rgba(124,58,237,0.45), 0 3px 8px rgba(0,0,0,0.12);
-  --clay-shadow-btn-hover: 0 12px 32px rgba(124,58,237,0.55), 0 4px 10px rgba(0,0,0,0.14);
+  --clay-shadow-sm: 0 4px 12px rgba(124, 58, 237, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --clay-shadow-md: 0 12px 32px rgba(124, 58, 237, 0.14), 0 4px 12px rgba(0, 0, 0, 0.07);
+  --clay-shadow-lg:
+    0 24px 56px rgba(124, 58, 237, 0.16), 0 8px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --clay-shadow-btn: 0 8px 24px rgba(124, 58, 237, 0.45), 0 3px 8px rgba(0, 0, 0, 0.12);
+  --clay-shadow-btn-hover: 0 12px 32px rgba(124, 58, 237, 0.55), 0 4px 10px rgba(0, 0, 0, 0.14);
 }
 
 * {
@@ -48,7 +49,11 @@ html {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Plus Jakarta Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
   background: linear-gradient(135deg, var(--color-bg-from) 0%, var(--color-bg-mid) 40%, var(--color-bg-to) 100%);
   background-attachment: fixed;
   color: var(--color-text);
@@ -77,8 +82,15 @@ body {
 
 /* === Status pulse (now on light bg) === */
 @keyframes status-pulse {
-  0%, 100% { opacity: 1;   transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(0.8); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
 }
 
 .status-pulse {
@@ -87,17 +99,40 @@ body {
 
 /* === Blob float animation === */
 @keyframes blob-float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  33%       { transform: translateY(-18px) scale(1.03); }
-  66%       { transform: translateY(10px) scale(0.97); }
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  33% {
+    transform: translateY(-18px) scale(1.03);
+  }
+  66% {
+    transform: translateY(10px) scale(0.97);
+  }
 }
 
-.blob-float { animation: blob-float 8s ease-in-out infinite; }
-.blob-float-delay { animation: blob-float 10s ease-in-out infinite 2s; }
-.blob-float-slow  { animation: blob-float 13s ease-in-out infinite 4s; }
+.blob-float {
+  animation: blob-float 8s ease-in-out infinite;
+}
+.blob-float-delay {
+  animation: blob-float 10s ease-in-out infinite 2s;
+}
+.blob-float-slow {
+  animation: blob-float 13s ease-in-out infinite 4s;
+}
 
 /* === Scrollbar (light) === */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #F1F5F9; }
-::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

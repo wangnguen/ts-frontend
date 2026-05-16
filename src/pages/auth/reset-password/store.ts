@@ -38,5 +38,5 @@ export const useResetPasswordStore = create<ResetPasswordState>((set, get) => ({
     }
   },
 
-  reset: () => set({ step: 'otp', otpCode: '', loading: false, error: '' }),
+  reset: () => set({ step: 'otp', otpCode: '', loading: false, error: '' })
 }))

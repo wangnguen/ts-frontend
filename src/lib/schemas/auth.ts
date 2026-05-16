@@ -5,7 +5,7 @@ const PASSWORD_MESSAGE = 'Mật khẩu cần ít nhất 8 ký tự, gồm chữ 
 
 export const loginSchema = z.object({
   email: z.string().email('Email không hợp lệ'),
-  password: z.string().min(1, 'Vui lòng nhập mật khẩu'),
+  password: z.string().min(1, 'Vui lòng nhập mật khẩu')
 })
 
 export const registerSchema = z
@@ -14,32 +14,32 @@ export const registerSchema = z
     username: z.string().min(3, 'Tên đăng nhập tối thiểu 3 ký tự').max(30, 'Tối đa 30 ký tự'),
     email: z.string().email('Email không hợp lệ'),
     password: z.string().min(8, 'Mật khẩu tối thiểu 8 ký tự').regex(PASSWORD_REGEX, PASSWORD_MESSAGE),
-    confirmPassword: z.string(),
+    confirmPassword: z.string()
   })
   .refine((d) => d.password === d.confirmPassword, {
     message: 'Mật khẩu xác nhận không khớp',
-    path: ['confirmPassword'],
+    path: ['confirmPassword']
   })
 
 export const forgotPasswordSchema = z.object({
-  email: z.string().email('Email không hợp lệ'),
+  email: z.string().email('Email không hợp lệ')
 })
 
 export const otpSchema = z.object({
   otp: z
     .string()
     .length(6, 'Mã OTP phải đủ 6 số')
-    .regex(/^\d{6}$/, 'Mã OTP chỉ gồm chữ số'),
+    .regex(/^\d{6}$/, 'Mã OTP chỉ gồm chữ số')
 })
 
 export const resetPasswordSchema = z
   .object({
     password: z.string().min(8, 'Mật khẩu tối thiểu 8 ký tự').regex(PASSWORD_REGEX, PASSWORD_MESSAGE),
-    confirmPassword: z.string(),
+    confirmPassword: z.string()
   })
   .refine((d) => d.password === d.confirmPassword, {
     message: 'Mật khẩu xác nhận không khớp',
-    path: ['confirmPassword'],
+    path: ['confirmPassword']
   })
 
 export type LoginInput = z.infer<typeof loginSchema>

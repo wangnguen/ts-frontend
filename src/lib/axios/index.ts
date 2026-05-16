@@ -5,8 +5,4 @@ applyInterceptors(axiosInstance)
 
 export const http = axiosInstance
 
-export {
-  getAccessToken,
-  setAccessToken,
-  ApiError,
-} from './interceptors'
+export { getAccessToken, setAccessToken, ApiError } from './interceptors'

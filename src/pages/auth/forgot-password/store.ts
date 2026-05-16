@@ -49,5 +49,5 @@ export const useForgotPasswordStore = create<ForgotPasswordState>((set, get) => 
     }
   },
 
-  reset: () => set({ step: 'form', email: '', loading: false, error: '' }),
+  reset: () => set({ step: 'form', email: '', loading: false, error: '' })
 }))

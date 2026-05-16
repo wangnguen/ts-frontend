@@ -15,9 +15,7 @@ export async function updateMe(payload: UpdateProfileRequest): Promise<AuthUser>
   return data
 }
 
-export async function changePassword(
-  payload: ChangePasswordRequest,
-): Promise<ChangePasswordResponse> {
+export async function changePassword(payload: ChangePasswordRequest): Promise<ChangePasswordResponse> {
   const { data } = await http.patch<ChangePasswordResponse>('/users/me/password', payload)
   return data
 }

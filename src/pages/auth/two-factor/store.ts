@@ -32,5 +32,5 @@ export const useTwoFactorStore = create<TwoFactorState>((set) => ({
     }
   },
 
-  reset: () => set({ loading: false, error: '' }),
+  reset: () => set({ loading: false, error: '' })
 }))

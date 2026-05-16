@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       pendingToken: null,
       pendingEmail: null,
       pendingPassword: null,
-      isAuthenticated: true,
+      isAuthenticated: true
     })
   },
 
@@ -48,11 +48,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       pendingToken: null,
       pendingEmail: null,
       pendingPassword: null,
-      isAuthenticated: false,
+      isAuthenticated: false
     })
   },
 
-  
   initAuth: async () => {
     try {
       const { accessToken } = await authApi.refreshToken()
@@ -63,5 +62,5 @@ export const useAuthStore = create<AuthState>((set) => ({
       setAccessToken(null)
       set({ user: null, accessToken: null, isAuthenticated: false })
     }
-  },
+  }
 }))

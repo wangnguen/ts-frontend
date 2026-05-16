@@ -14,7 +14,7 @@ import type {
   ResetPasswordRequest,
   VerifyEmailRequest,
   Confirm2FARequest,
-  Disable2FARequest,
+  Disable2FARequest
 } from '../types'
 
 export interface RegisterResponse {
@@ -30,11 +30,9 @@ export async function register(payload: RegisterRequest): Promise<RegisterRespon
   return data
 }
 
-export async function loginPassword(
-  payload: LoginPasswordRequest,
-): Promise<AuthResponse | TwoFactorRequired> {
+export async function loginPassword(payload: LoginPasswordRequest): Promise<AuthResponse | TwoFactorRequired> {
   const { data } = await http.post<AuthResponse | TwoFactorRequired>('/auth/login', payload, {
-    skipAuth: true,
+    skipAuth: true
   })
   return data
 }
@@ -51,7 +49,7 @@ export async function logout(): Promise<void> {
 
 export async function refreshToken(): Promise<RefreshResponse> {
   const { data } = await http.post<RefreshResponse>('/auth/refresh-token', undefined, {
-    skipAuth: true,
+    skipAuth: true
   })
   return data
 }
@@ -63,7 +61,7 @@ export async function getGoogleAuthUrl(): Promise<GoogleOAuthUrlData> {
 
 export async function googleCallback(payload: GoogleCallbackRequest): Promise<AuthResponse> {
   const { data } = await http.post<AuthResponse>('/auth/google/callback', payload, {
-    skipAuth: true,
+    skipAuth: true
   })
   return data
 }
@@ -106,5 +104,5 @@ export const authService = {
   verifyEmail,
   setup2FA,
   confirm2FA,
-  disable2FA,
+  disable2FA
 }

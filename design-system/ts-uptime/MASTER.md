@@ -15,33 +15,33 @@
 
 ## Color Palette
 
-| Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#7C3AED` | `--color-primary` |
-| Primary Hover | `#6D28D9` | `--color-primary-hover` |
-| Primary Light | `rgba(124,58,237,0.08)` | `--color-primary-light` |
-| Secondary | `#F97316` | `--color-secondary` |
-| Accent | `#EC4899` | `--color-accent` |
-| Background From | `#EEF2FF` | `--color-bg-from` |
-| Background Mid | `#F5F3FF` | `--color-bg-mid` |
-| Background To | `#FFF0F9` | `--color-bg-to` |
-| Surface | `#FFFFFF` | `--color-surface` |
-| Surface 2 | `#F8F7FF` | `--color-surface-2` |
-| Border | `rgba(124,58,237,0.12)` | `--color-border` |
-| Border 2 | `#E5E7EB` | `--color-border-2` |
-| Text | `#1E1B4B` | `--color-text` |
-| Text 2 | `#3730A3` | `--color-text-2` |
-| Muted | `#6B7280` | `--color-muted` |
+| Role            | Hex                     | CSS Variable            |
+| --------------- | ----------------------- | ----------------------- |
+| Primary         | `#7C3AED`               | `--color-primary`       |
+| Primary Hover   | `#6D28D9`               | `--color-primary-hover` |
+| Primary Light   | `rgba(124,58,237,0.08)` | `--color-primary-light` |
+| Secondary       | `#F97316`               | `--color-secondary`     |
+| Accent          | `#EC4899`               | `--color-accent`        |
+| Background From | `#EEF2FF`               | `--color-bg-from`       |
+| Background Mid  | `#F5F3FF`               | `--color-bg-mid`        |
+| Background To   | `#FFF0F9`               | `--color-bg-to`         |
+| Surface         | `#FFFFFF`               | `--color-surface`       |
+| Surface 2       | `#F8F7FF`               | `--color-surface-2`     |
+| Border          | `rgba(124,58,237,0.12)` | `--color-border`        |
+| Border 2        | `#E5E7EB`               | `--color-border-2`      |
+| Text            | `#1E1B4B`               | `--color-text`          |
+| Text 2          | `#3730A3`               | `--color-text-2`        |
+| Muted           | `#6B7280`               | `--color-muted`         |
 
 ### Status Colors
 
-| Status | Hex | CSS Variable |
-|--------|-----|--------------|
-| Up | `#10B981` | `--color-up` |
-| Up Hover | `#059669` | `--color-up-hover` |
-| Down | `#EF4444` | `--color-down` |
-| Warning | `#F59E0B` | `--color-warning` |
-| Pending | `#3B82F6` | `--color-pending` |
+| Status      | Hex       | CSS Variable          |
+| ----------- | --------- | --------------------- |
+| Up          | `#10B981` | `--color-up`          |
+| Up Hover    | `#059669` | `--color-up-hover`    |
+| Down        | `#EF4444` | `--color-down`        |
+| Warning     | `#F59E0B` | `--color-warning`     |
+| Pending     | `#3B82F6` | `--color-pending`     |
 | Maintenance | `#A855F7` | `--color-maintenance` |
 
 ---
@@ -66,11 +66,12 @@
 ## Shadows (Clay)
 
 ```css
---clay-shadow-sm:       0 4px 12px rgba(124,58,237,0.10), 0 2px 4px rgba(0,0,0,0.06);
---clay-shadow-md:       0 12px 32px rgba(124,58,237,0.14), 0 4px 12px rgba(0,0,0,0.07);
---clay-shadow-lg:       0 24px 56px rgba(124,58,237,0.16), 0 8px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
---clay-shadow-btn:      0 8px 24px rgba(124,58,237,0.45), 0 3px 8px rgba(0,0,0,0.12);
---clay-shadow-btn-hover:0 12px 32px rgba(124,58,237,0.55), 0 4px 10px rgba(0,0,0,0.14);
+--clay-shadow-sm: 0 4px 12px rgba(124, 58, 237, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+--clay-shadow-md: 0 12px 32px rgba(124, 58, 237, 0.14), 0 4px 12px rgba(0, 0, 0, 0.07);
+--clay-shadow-lg:
+  0 24px 56px rgba(124, 58, 237, 0.16), 0 8px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+--clay-shadow-btn: 0 8px 24px rgba(124, 58, 237, 0.45), 0 3px 8px rgba(0, 0, 0, 0.12);
+--clay-shadow-btn-hover: 0 12px 32px rgba(124, 58, 237, 0.55), 0 4px 10px rgba(0, 0, 0, 0.14);
 ```
 
 ---
@@ -79,7 +80,7 @@
 
 ```css
 body {
-  background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 40%, #FFF0F9 100%);
+  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 40%, #fff0f9 100%);
   background-attachment: fixed;
 }
 ```
@@ -92,7 +93,7 @@ body {
 
 ```css
 .clay-card {
-  background: #FFFFFF;                          /* --color-surface */
+  background: #ffffff; /* --color-surface */
   border-radius: 28px;
   border: 2px solid rgba(255, 255, 255, 0.85);
   box-shadow: var(--clay-shadow-lg);
@@ -116,6 +117,7 @@ Usage in JSX: `<div className="clay-card p-8">`
 ```
 
 **Blob color palette** (use inline style):
+
 ```
 rgba(167,139,250,0.35)  /* violet-400  */
 rgba(249,115,22,0.22)   /* orange-400  */
@@ -227,33 +229,34 @@ style={{
 ```
 
 **Success variant (green):**
+
 ```tsx
-background: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(52,211,153,0.12))"
-border: "2px solid rgba(16,185,129,0.3)"
-boxShadow: "0 8px 24px rgba(16,185,129,0.2)"
+background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(52,211,153,0.12))'
+border: '2px solid rgba(16,185,129,0.3)'
+boxShadow: '0 8px 24px rgba(16,185,129,0.2)'
 ```
 
 ### Progress Bar (multi-step)
 
 ```tsx
 // Active step
-background: "linear-gradient(135deg, #7C3AED, #A855F7)"
-boxShadow: "0 4px 12px rgba(124,58,237,0.4)"
-color: "#FFFFFF"
+background: 'linear-gradient(135deg, #7C3AED, #A855F7)'
+boxShadow: '0 4px 12px rgba(124,58,237,0.4)'
+color: '#FFFFFF'
 
 // Completed step
-background: "rgba(124,58,237,0.15)"
-color: "var(--color-primary)"
+background: 'rgba(124,58,237,0.15)'
+color: 'var(--color-primary)'
 
 // Pending step
-background: "#E5E7EB"
-color: "#9CA3AF"
+background: '#E5E7EB'
+color: '#9CA3AF'
 
 // Connector (completed)
-background: "linear-gradient(90deg, #7C3AED, #A855F7)"
+background: 'linear-gradient(90deg, #7C3AED, #A855F7)'
 
 // Connector (pending)
-background: "#E5E7EB"
+background: '#E5E7EB'
 ```
 
 ### Status Bar
@@ -341,20 +344,20 @@ onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-primary)")}
 
 ## Spacing & Border Radius
 
-| Usage | Value | Tailwind |
-|-------|-------|----------|
-| Auth card | `28px` | `rounded-[28px]` / custom |
-| Button, Input, OTP | `16px` | `rounded-2xl` |
-| Icon container | `16px` | `rounded-2xl` |
-| Status pill | `9999px` | `rounded-full` |
-| Warning/Error banner | `16px` | `rounded-2xl` |
+| Usage                | Value    | Tailwind                  |
+| -------------------- | -------- | ------------------------- |
+| Auth card            | `28px`   | `rounded-[28px]` / custom |
+| Button, Input, OTP   | `16px`   | `rounded-2xl`             |
+| Icon container       | `16px`   | `rounded-2xl`             |
+| Status pill          | `9999px` | `rounded-full`            |
+| Warning/Error banner | `16px`   | `rounded-2xl`             |
 
-| Padding | Usage |
-|---------|-------|
-| `p-8` | Clay card content |
-| `px-4 py-3` | Input fields |
-| `py-3 px-4` | Buttons |
-| `p-3.5` | Banners |
+| Padding     | Usage             |
+| ----------- | ----------------- |
+| `p-8`       | Clay card content |
+| `px-4 py-3` | Input fields      |
+| `py-3 px-4` | Buttons           |
+| `p-3.5`     | Banners           |
 
 ---
 
@@ -362,12 +365,20 @@ onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-primary)")}
 
 ```css
 /* Blob float: 8s / 10s / 13s ease-in-out infinite */
-.blob-float       { animation: blob-float 8s ease-in-out infinite; }
-.blob-float-delay { animation: blob-float 10s ease-in-out infinite 2s; }
-.blob-float-slow  { animation: blob-float 13s ease-in-out infinite 4s; }
+.blob-float {
+  animation: blob-float 8s ease-in-out infinite;
+}
+.blob-float-delay {
+  animation: blob-float 10s ease-in-out infinite 2s;
+}
+.blob-float-slow {
+  animation: blob-float 13s ease-in-out infinite 4s;
+}
 
 /* Status dot pulse */
-.status-pulse { animation: status-pulse 2s ease-in-out infinite; }
+.status-pulse {
+  animation: status-pulse 2s ease-in-out infinite;
+}
 
 /* Button hover: translateY(-2px) + shadow — 200ms ease */
 /* Input focus ring: 200ms ease */

@@ -27,5 +27,5 @@ export const useVerifyEmailStore = create<VerifyEmailState>((set) => ({
     }
   },
 
-  reset: () => set({ loading: false, error: '', verified: false }),
+  reset: () => set({ loading: false, error: '', verified: false })
 }))
