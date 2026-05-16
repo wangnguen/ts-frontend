@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import { useAuthStore } from './stores/authStore'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -20,71 +21,77 @@ import NotFoundPage from './pages/not-found'
 
 function App() {
   const initAuth = useAuthStore((s) => s.initAuth)
+  const initCalled = useRef(false)
 
   useEffect(() => {
+    if (initCalled.current) return
+    initCalled.current = true
     initAuth()
   }, [initAuth])
 
   return (
-    <Routes>
-      {/* Root redirect */}
-      <Route path='/' element={<Navigate to='/dashboard' replace />} />
+    <>
+      <Toaster richColors position='top-right' />
+      <Routes>
+        {/* Root redirect */}
+        <Route path='/' element={<Navigate to='/dashboard' replace />} />
 
-      {/* Guest-only auth pages */}
-      <Route
-        path='/login'
-        element={
-          <GuestRoute>
-            <LoginPage />
-          </GuestRoute>
-        }
-      />
-      <Route
-        path='/register'
-        element={
-          <GuestRoute>
-            <RegisterPage />
-          </GuestRoute>
-        }
-      />
-      <Route path='/2fa' element={<TwoFactorPage />} />
-      <Route
-        path='/forgot-password'
-        element={
-          <GuestRoute>
-            <ForgotPasswordPage />
-          </GuestRoute>
-        }
-      />
-      <Route path='/reset-password' element={<ResetPasswordPage />} />
-      <Route path='/verify-email' element={<VerifyEmailPage />} />
-      <Route path='/callback' element={<CallbackPage />} />
+        {/* Guest-only auth pages */}
+        <Route
+          path='/login'
+          element={
+            <GuestRoute>
+              <LoginPage />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <GuestRoute>
+              <RegisterPage />
+            </GuestRoute>
+          }
+        />
+        <Route path='/2fa' element={<TwoFactorPage />} />
+        <Route
+          path='/forgot-password'
+          element={
+            <GuestRoute>
+              <ForgotPasswordPage />
+            </GuestRoute>
+          }
+        />
+        <Route path='/reset-password' element={<ResetPasswordPage />} />
+        <Route path='/verify-email' element={<VerifyEmailPage />} />
+        <Route path='/callback' element={<CallbackPage />} />
 
-      {/* Protected app pages */}
-      <Route
-        path='/dashboard'
-        element={
-          <ProtectedRoute>
-            <AppLayout>
-              <DashboardPage />
-            </AppLayout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path='/settings'
-        element={
-          <ProtectedRoute>
-            <AppLayout>
-              <SettingsPage />
-            </AppLayout>
-          </ProtectedRoute>
-        }
-      />
+        {/* Protected app pages */}
+        <Route
+          path='/dashboard'
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <DashboardPage />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/settings'
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <SettingsPage />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
 
-      {/* 404 */}
-      <Route path='*' element={<NotFoundPage />} />
-    </Routes>
+        {/* 404 */}
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+    </>
   )
 }
 

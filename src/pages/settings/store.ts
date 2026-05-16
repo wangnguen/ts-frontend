@@ -1,3 +1,4 @@
+import { toast } from 'sonner'
 import { create } from 'zustand'
 import { authApi, usersApi, ApiError } from '@lib/api'
 import type { TwoFactorSetup } from '@lib/api'
@@ -10,18 +11,15 @@ interface SettingsState {
 
   profileLoading: boolean
   profileError: string
-  profileSuccess: string
   submitProfile: (data: UpdateProfileInput) => Promise<void>
 
   passwordLoading: boolean
   passwordError: string
-  passwordSuccess: string
   submitPassword: (data: ChangePasswordInput) => Promise<void>
 
   twoFASetup: TwoFactorSetup | null
   twoFALoading: boolean
   twoFAError: string
-  twoFASuccess: string
   startSetup2FA: () => Promise<void>
   confirmSetup2FA: (code: string) => Promise<void>
   cancelSetup2FA: () => void
@@ -38,16 +36,15 @@ export const useSettingsStore = create<SettingsState>((set) => ({
 
   profileLoading: false,
   profileError: '',
-  profileSuccess: '',
   submitProfile: async (data) => {
-    set({ profileLoading: true, profileError: '', profileSuccess: '' })
+    set({ profileLoading: true, profileError: '' })
     try {
       const updated = await usersApi.updateMe({
         fullName: data.fullName,
         username: data.username || undefined
       })
       useAuthStore.getState().setUser(updated)
-      set({ profileSuccess: 'Cập nhật hồ sơ thành công!' })
+      toast.success('Cập nhật hồ sơ thành công!')
     } catch (err) {
       set({ profileError: err instanceof ApiError ? err.message : 'Cập nhật thất bại' })
     } finally {
@@ -57,12 +54,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
 
   passwordLoading: false,
   passwordError: '',
-  passwordSuccess: '',
   submitPassword: async (data) => {
-    set({ passwordLoading: true, passwordError: '', passwordSuccess: '' })
+    set({ passwordLoading: true, passwordError: '' })
     try {
       await usersApi.changePassword(data.currentPassword, data.newPassword, data.confirmPassword)
-      set({ passwordSuccess: 'Đổi mật khẩu thành công!' })
+      toast.success('Đổi mật khẩu thành công!')
     } catch (err) {
       set({ passwordError: err instanceof ApiError ? err.message : 'Đổi mật khẩu thất bại' })
     } finally {
@@ -73,9 +69,8 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   twoFASetup: null,
   twoFALoading: false,
   twoFAError: '',
-  twoFASuccess: '',
   startSetup2FA: async () => {
-    set({ twoFALoading: true, twoFAError: '', twoFASuccess: '' })
+    set({ twoFALoading: true, twoFAError: '' })
     try {
       const setup = await authApi.setup2FA()
       set({ twoFASetup: setup })
@@ -91,19 +86,24 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     set({ twoFALoading: true, twoFAError: '' })
     try {
       await authApi.confirm2FA(code, twoFASetup.setUpToken)
-      set({ twoFASetup: null, twoFASuccess: 'Xác thực 2 yếu tố đã được kích hoạt!' })
+      const currentUser = useAuthStore.getState().user
+      if (currentUser) useAuthStore.getState().setUser({ ...currentUser, isTwoFAEnabled: true })
+      set({ twoFASetup: null })
+      toast.success('Xác thực 2 yếu tố đã được kích hoạt!')
     } catch (err) {
       set({ twoFAError: err instanceof ApiError ? err.message : 'Mã không hợp lệ' })
     } finally {
       set({ twoFALoading: false })
     }
   },
-  cancelSetup2FA: () => set({ twoFASetup: null, twoFAError: '', twoFASuccess: '' }),
+  cancelSetup2FA: () => set({ twoFASetup: null, twoFAError: '' }),
   disable2FA: async (code) => {
-    set({ twoFALoading: true, twoFAError: '', twoFASuccess: '' })
+    set({ twoFALoading: true, twoFAError: '' })
     try {
       await authApi.disable2FA(code)
-      set({ twoFASuccess: 'Đã tắt xác thực 2 yếu tố.' })
+      const currentUser = useAuthStore.getState().user
+      if (currentUser) useAuthStore.getState().setUser({ ...currentUser, isTwoFAEnabled: false })
+      toast.success('Đã tắt xác thực 2 yếu tố.')
     } catch (err) {
       set({ twoFAError: err instanceof ApiError ? err.message : 'Không thể tắt 2FA' })
     } finally {
