@@ -136,3 +136,61 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* === Accessibility: focus ring === */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* === Accessibility: reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === Interactive: disabled cursor === */
+:disabled {
+  cursor: not-allowed;
+}
+
+/* === Button hover helpers === */
+/* Primary gradient button — elevates shadow on hover */
+.btn-primary:not(:disabled):hover {
+  box-shadow: var(--clay-shadow-btn-hover) !important;
+}
+/* Ghost danger (logout) — transparent base, red tint on hover */
+.btn-ghost-danger:hover {
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+/* Outline danger (delete account) — already has a red tint, darkens on hover */
+.btn-outline-danger:hover {
+  background: rgba(239, 68, 68, 0.14) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+/* Secondary/cancel button */
+.btn-secondary:hover {
+  background: var(--color-surface-2) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* === Confirm state animation === */
+@keyframes fade-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-confirm {
+  animation: fade-slide-in 180ms ease-out;
+}

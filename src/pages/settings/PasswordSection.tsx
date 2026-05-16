@@ -85,9 +85,9 @@ function PasswordInput({ id, label, placeholder, error, registration }: Password
         <button
           type='button'
           onClick={() => setShow((v) => !v)}
-          className='absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer transition-opacity hover:opacity-70'
+          aria-label={show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+          className='absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer transition-opacity duration-150 hover:opacity-70'
           style={{ color: 'var(--color-muted)' }}
-          tabIndex={-1}
         >
           {show ? <EyeOffIcon /> : <EyeIcon />}
         </button>
@@ -170,7 +170,7 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
             <button
               type='button'
               onClick={onClose}
-              className='px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer'
+              className='px-4 py-2.5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200 btn-secondary'
               style={{ color: 'var(--color-muted)', border: '1.5px solid var(--color-border-2)' }}
             >
               Hủy

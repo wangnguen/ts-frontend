@@ -48,7 +48,12 @@ export default function SettingsPage() {
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className='px-5 py-2 rounded-xl text-sm font-bold transition-all duration-150 cursor-pointer'
+            className={[
+              'px-5 py-2 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer',
+              activeTab !== tab.key && 'hover:bg-(--color-primary-light) hover:text-(--color-primary)'
+            ]
+              .filter(Boolean)
+              .join(' ')}
             style={
               activeTab === tab.key
                 ? {

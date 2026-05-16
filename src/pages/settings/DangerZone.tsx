@@ -32,7 +32,7 @@ export function DangerZone() {
       {!confirm ? (
         <button
           onClick={() => setConfirm(true)}
-          className='px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-150 cursor-pointer'
+          className='px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer btn-outline-danger'
           style={{
             color: 'var(--color-down)',
             border: '1.5px solid rgba(239,68,68,0.35)',
@@ -42,7 +42,7 @@ export function DangerZone() {
           Xóa tài khoản
         </button>
       ) : (
-        <div className='flex flex-col sm:flex-row gap-3 items-start sm:items-center'>
+        <div className='flex flex-col sm:flex-row gap-3 items-start sm:items-center animate-confirm'>
           <p className='text-sm font-semibold' style={{ color: 'var(--color-down)' }}>
             Bạn chắc chắn muốn xóa?
           </p>
@@ -50,14 +50,14 @@ export function DangerZone() {
             <button
               onClick={handleDelete}
               disabled={deleteLoading}
-              className='px-4 py-2 rounded-xl text-sm font-bold text-white cursor-pointer disabled:opacity-60'
+              className='px-4 py-2 rounded-xl text-sm font-bold text-white cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200'
               style={{ background: 'var(--color-down)', boxShadow: '0 4px 12px rgba(239,68,68,0.4)' }}
             >
               {deleteLoading ? 'Đang xóa...' : 'Xác nhận xóa'}
             </button>
             <button
               onClick={() => setConfirm(false)}
-              className='px-4 py-2 rounded-xl text-sm font-semibold cursor-pointer'
+              className='px-4 py-2 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200 btn-secondary'
               style={{ color: 'var(--color-muted)', border: '1.5px solid var(--color-border-2)' }}
             >
               Hủy

@@ -69,20 +69,18 @@ export default function DashboardPage() {
       <div className='flex items-center justify-between'>
         <div>
           <h1 className='text-2xl font-extrabold' style={{ color: 'var(--color-text)' }}>
-            Xin chào, {user?.fullName?.split(' ').at(-1) ?? 'bạn'} 👋
+            Xin chào, {user?.fullName?.split(' ').slice(-1)[0] ?? 'bạn'} 👋
           </h1>
           <p className='text-sm mt-0.5 font-medium' style={{ color: 'var(--color-muted)' }}>
             Theo dõi trạng thái dịch vụ của bạn
           </p>
         </div>
         <button
-          className='flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-150 cursor-pointer'
+          className='flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 cursor-pointer btn-primary'
           style={{
             background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
             boxShadow: 'var(--clay-shadow-btn)'
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn-hover)')}
-          onMouseLeave={(e) => (e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn)')}
         >
           <IconPlus />
           Thêm monitor
@@ -121,13 +119,11 @@ export default function DashboardPage() {
           </p>
         </div>
         <button
-          className='flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white mt-2 cursor-pointer transition-all duration-150'
+          className='flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white mt-2 cursor-pointer transition-all duration-200 btn-primary'
           style={{
             background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
             boxShadow: 'var(--clay-shadow-btn)'
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn-hover)')}
-          onMouseLeave={(e) => (e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn)')}
         >
           <IconPlus />
           Thêm monitor đầu tiên

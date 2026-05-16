@@ -106,18 +106,19 @@ function Sidebar() {
             to={item.to}
             className={({ isActive }) =>
               [
-                'flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150',
-                isActive ? 'text-white' : 'hover:bg-(--color-primary-light)'
+                'flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 cursor-pointer',
+                isActive
+                  ? 'text-white'
+                  : 'text-(--color-muted) hover:bg-(--color-primary-light) hover:text-(--color-primary)'
               ].join(' ')
             }
             style={({ isActive }) =>
               isActive
                 ? {
                     background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
-                    boxShadow: 'var(--clay-shadow-btn)',
-                    color: '#fff'
+                    boxShadow: 'var(--clay-shadow-btn)'
                   }
-                : { color: 'var(--color-muted)' }
+                : {}
             }
           >
             {item.icon}
@@ -156,10 +157,9 @@ function Sidebar() {
 
         <button
           onClick={handleLogout}
-          className='w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-150 cursor-pointer'
+          aria-label='Đăng xuất'
+          className='w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer btn-ghost-danger'
           style={{ color: 'var(--color-down)' }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(239,68,68,0.08)')}
-          onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
         >
           <IconLogout />
           Đăng xuất
