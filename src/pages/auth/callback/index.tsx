@@ -42,7 +42,7 @@ export default function CallbackPage() {
       .catch((err) => {
         setError(err instanceof ApiError ? err.message : 'Đăng nhập bằng Google thất bại.')
       })
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className='min-h-screen flex items-center justify-center px-4 relative overflow-hidden'>
