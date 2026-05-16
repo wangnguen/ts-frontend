@@ -1,17 +1,15 @@
-export { ApiError, setTokens, clearTokens, getAccessToken, getRefreshToken } from './axios'
+export { ApiError, setAccessToken, getAccessToken } from './axios'
 
 export type {
   AuthUser,
   AuthResponse,
+  RefreshResponse,
   TwoFactorRequired,
   TwoFactorSetup,
-  TokenPair,
   RegisterRequest,
   LoginRequest,
   LoginPasswordRequest,
   Login2FARequest,
-  LogoutRequest,
-  RefreshTokenRequest,
   GoogleOAuthUrlResponse,
   GoogleCallbackRequest,
   ForgotPasswordRequest,
@@ -30,8 +28,8 @@ export const authApi = {
   register: authService.register,
   loginPassword: authService.loginPassword,
   login2FA: authService.login2FA,
-  logout: (refreshToken: string) => authService.logout({ refreshToken }),
-  refreshToken: (refreshToken: string) => authService.refreshToken({ refreshToken }),
+  logout: authService.logout,
+  refreshToken: authService.refreshToken,
   forgotPassword: (email: string) => authService.forgotPassword({ email }),
   resetPassword: (token: string, password: string, confirmPassword: string) =>
     authService.resetPassword({ token, password, confirmPassword }),

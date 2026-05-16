@@ -9,11 +9,11 @@ import ResetPasswordPage from './pages/auth/reset-password'
 import VerifyEmailPage from './pages/auth/verify-email'
 
 function App() {
-  const loadFromStorage = useAuthStore((s) => s.loadFromStorage)
+  const initAuth = useAuthStore((s) => s.initAuth)
 
   useEffect(() => {
-    loadFromStorage()
-  }, [loadFromStorage])
+    initAuth()
+  }, [initAuth])
 
   return (
     <Routes>

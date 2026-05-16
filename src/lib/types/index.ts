@@ -15,13 +15,13 @@ export interface AuthUser {
   avatarUrl: string | null
 }
 
-export interface TokenPair {
+export interface AuthResponse {
   accessToken: string
-  refreshToken: string
+  user: AuthUser
 }
 
-export interface AuthResponse extends TokenPair {
-  user: AuthUser
+export interface RefreshResponse {
+  accessToken: string
 }
 
 export interface TwoFactorRequired {
@@ -56,13 +56,6 @@ export interface Login2FARequest {
 
 export type LoginRequest = LoginPasswordRequest | Login2FARequest
 
-export interface LogoutRequest {
-  refreshToken: string
-}
-
-export interface RefreshTokenRequest {
-  refreshToken: string
-}
 
 export interface GoogleOAuthUrlResponse {
   url: string

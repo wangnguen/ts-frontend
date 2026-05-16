@@ -2,14 +2,12 @@ import { http } from '../axios'
 import type {
   AuthUser,
   AuthResponse,
+  RefreshResponse,
   TwoFactorRequired,
   TwoFactorSetup,
-  TokenPair,
   RegisterRequest,
   LoginPasswordRequest,
   Login2FARequest,
-  LogoutRequest,
-  RefreshTokenRequest,
   GoogleOAuthUrlResponse,
   GoogleCallbackRequest,
   ForgotPasswordRequest,
@@ -46,16 +44,13 @@ export async function login2FA(payload: Login2FARequest): Promise<AuthResponse> 
   return data
 }
 
-export async function logout(payload: LogoutRequest): Promise<void> {
-  await http.post('/auth/logout', payload, {
-    headers: { Authorization: `Bearer ${payload.refreshToken}` },
-    skipAuth: true,
-  })
+// RT là HTTP-only cookie — BE tự đọc, không cần gửi body
+export async function logout(): Promise<void> {
+  await http.post('/auth/logout', undefined, { skipAuth: true })
 }
 
-export async function refreshToken(payload: RefreshTokenRequest): Promise<TokenPair> {
-  const { data } = await http.post<TokenPair>('/auth/refresh-token', payload, {
-    headers: { Authorization: `Bearer ${payload.refreshToken}` },
+export async function refreshToken(): Promise<RefreshResponse> {
+  const { data } = await http.post<RefreshResponse>('/auth/refresh-token', undefined, {
     skipAuth: true,
   })
   return data

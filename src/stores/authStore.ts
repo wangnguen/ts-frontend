@@ -1,18 +1,9 @@
 import { create } from 'zustand'
-import {
-  type AuthUser,
-  type AuthResponse,
-  authApi,
-  setTokens,
-  clearTokens,
-  getAccessToken,
-  getRefreshToken,
-} from '../lib/api'
+import { type AuthUser, type AuthResponse, authApi, usersApi, setAccessToken } from '../lib/api'
 
 interface AuthState {
   user: AuthUser | null
   accessToken: string | null
-  refreshToken: string | null
   pendingToken: string | null
   pendingEmail: string | null
   pendingPassword: string | null
@@ -21,25 +12,22 @@ interface AuthState {
   setAuth: (data: AuthResponse) => void
   setPending2FA: (token: string, email: string, password: string) => void
   logout: () => Promise<void>
-  loadFromStorage: () => void
+  initAuth: () => Promise<void>
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   accessToken: null,
-  refreshToken: null,
   pendingToken: null,
   pendingEmail: null,
   pendingPassword: null,
   isAuthenticated: false,
 
   setAuth: (data: AuthResponse) => {
-    setTokens(data.accessToken, data.refreshToken)
-    localStorage.setItem('user', JSON.stringify(data.user))
+    setAccessToken(data.accessToken)
     set({
       user: data.user,
       accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
       pendingToken: null,
       pendingEmail: null,
       pendingPassword: null,
@@ -52,27 +40,28 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: async () => {
-    const { refreshToken } = get()
-    if (refreshToken) {
-      await authApi.logout(refreshToken).catch(() => {})
-    }
-    clearTokens()
-    localStorage.removeItem('user')
-    set({ user: null, accessToken: null, refreshToken: null, pendingToken: null, pendingEmail: null, pendingPassword: null, isAuthenticated: false })
+    await authApi.logout().catch(() => {})
+    setAccessToken(null)
+    set({
+      user: null,
+      accessToken: null,
+      pendingToken: null,
+      pendingEmail: null,
+      pendingPassword: null,
+      isAuthenticated: false,
+    })
   },
 
-  loadFromStorage: () => {
-    const accessToken = getAccessToken()
-    const refreshToken = getRefreshToken()
-    const userStr = localStorage.getItem('user')
-    if (accessToken && refreshToken && userStr) {
-      try {
-        const user = JSON.parse(userStr) as AuthUser
-        set({ user, accessToken, refreshToken, isAuthenticated: true })
-      } catch {
-        clearTokens()
-        localStorage.removeItem('user')
-      }
+  
+  initAuth: async () => {
+    try {
+      const { accessToken } = await authApi.refreshToken()
+      setAccessToken(accessToken)
+      const user = await usersApi.getMe()
+      set({ user, accessToken, isAuthenticated: true })
+    } catch {
+      setAccessToken(null)
+      set({ user: null, accessToken: null, isAuthenticated: false })
     }
   },
 }))

@@ -7,8 +7,6 @@ export const http = axiosInstance
 
 export {
   getAccessToken,
-  getRefreshToken,
-  setTokens,
-  clearTokens,
+  setAccessToken,
   ApiError,
 } from './interceptors'

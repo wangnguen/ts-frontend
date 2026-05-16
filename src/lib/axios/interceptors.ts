@@ -8,19 +8,14 @@ declare module 'axios' {
   }
 }
 
+let _accessToken: string | null = null
+
 export function getAccessToken(): string | null {
-  return localStorage.getItem('accessToken')
+  return _accessToken
 }
-export function getRefreshToken(): string | null {
-  return localStorage.getItem('refreshToken')
-}
-export function setTokens(accessToken: string, refreshToken: string): void {
-  localStorage.setItem('accessToken', accessToken)
-  localStorage.setItem('refreshToken', refreshToken)
-}
-export function clearTokens(): void {
-  localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
+
+export function setAccessToken(token: string | null): void {
+  _accessToken = token
 }
 
 export class ApiError extends Error {
@@ -43,20 +38,15 @@ let isRefreshing = false
 let refreshQueue: Array<(token: string | null) => void> = []
 
 async function doRefresh(): Promise<string | null> {
-  const refreshToken = getRefreshToken()
-  if (!refreshToken) return null
   try {
-    type Envelope = { data: { accessToken: string; refreshToken: string } }
-    const res = await refreshClient.post<Envelope>(
-      '/auth/refresh-token',
-      { refreshToken },
-      { headers: { Authorization: `Bearer ${refreshToken}` } },
-    )
-    const { accessToken, refreshToken: newRefresh } = res.data.data
-    setTokens(accessToken, newRefresh)
+    // RT là HTTP-only cookie, BE tự đọc — không cần gửi body
+    type Envelope = { data: { accessToken: string } }
+    const res = await refreshClient.post<Envelope>('/auth/refresh-token')
+    const { accessToken } = res.data.data
+    setAccessToken(accessToken)
     return accessToken
   } catch {
-    clearTokens()
+    setAccessToken(null)
     return null
   }
 }
