@@ -12,6 +12,7 @@ import TwoFactorPage from './pages/auth/two-factor'
 import ForgotPasswordPage from './pages/auth/forgot-password'
 import ResetPasswordPage from './pages/auth/reset-password'
 import VerifyEmailPage from './pages/auth/verify-email'
+import CallbackPage from './pages/auth/callback'
 
 import DashboardPage from './pages/dashboard'
 import SettingsPage from './pages/settings'
@@ -57,6 +58,7 @@ function App() {
       />
       <Route path='/reset-password' element={<ResetPasswordPage />} />
       <Route path='/verify-email' element={<VerifyEmailPage />} />
+      <Route path='/callback' element={<CallbackPage />} />
 
       {/* Protected app pages */}
       <Route
