@@ -8,8 +8,10 @@ interface AuthState {
   pendingEmail: string | null
   pendingPassword: string | null
   isAuthenticated: boolean
+  initialized: boolean
 
   setAuth: (data: AuthResponse) => void
+  setUser: (user: AuthUser) => void
   setPending2FA: (token: string, email: string, password: string) => void
   logout: () => Promise<void>
   initAuth: () => Promise<void>
@@ -22,6 +24,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   pendingEmail: null,
   pendingPassword: null,
   isAuthenticated: false,
+  initialized: false,
 
   setAuth: (data: AuthResponse) => {
     setAccessToken(data.accessToken)
@@ -34,6 +37,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       isAuthenticated: true
     })
   },
+
+  setUser: (user: AuthUser) => set({ user }),
 
   setPending2FA: (token: string, email: string, password: string) => {
     set({ pendingToken: token, pendingEmail: email, pendingPassword: password })
@@ -57,10 +62,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       const { accessToken } = await authApi.refreshToken()
       setAccessToken(accessToken)
       const user = await usersApi.getMe()
-      set({ user, accessToken, isAuthenticated: true })
+      set({ user, accessToken, isAuthenticated: true, initialized: true })
     } catch {
       setAccessToken(null)
-      set({ user: null, accessToken: null, isAuthenticated: false })
+      set({ user: null, accessToken: null, isAuthenticated: false, initialized: true })
     }
   }
 }))
