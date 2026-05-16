@@ -1,12 +1,14 @@
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { otpSchema, type OtpInput as OtpFormValues } from '@lib/schemas/auth'
+import { useAuthStore } from '@stores/authStore'
 import { useTwoFactorStore } from './store'
 import { AuthLogo, AuthCard, ErrorBanner, OtpInput, SubmitButton, BackLink, AuthDivider } from '../components'
 
 export default function TwoFactorPage() {
   const navigate = useNavigate()
+  const pendingToken = useAuthStore((s) => s.pendingToken)
   const { loading, error, submit } = useTwoFactorStore()
 
   const {
@@ -21,6 +23,8 @@ export default function TwoFactorPage() {
 
   const otp = watch('otp')
   const isComplete = otp.length === 6
+
+  if (!pendingToken) return <Navigate to='/login' replace />
 
   return (
     <div className='min-h-screen flex items-center justify-center px-4 relative overflow-hidden'>

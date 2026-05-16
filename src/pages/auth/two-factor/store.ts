@@ -23,7 +23,7 @@ export const useTwoFactorStore = create<TwoFactorState>((set) => ({
     set({ error: '', loading: true })
     try {
       const res = await authApi.login2FA({ email: pendingEmail, password: pendingPassword, pendingToken, code: otp })
-      useAuthStore.getState().setAuth(res)
+      useAuthStore.getState().setAuth({ ...res, user: { ...res.user, isTwoFactorEnabled: true } })
       navigate('/dashboard')
     } catch (err) {
       set({ error: err instanceof ApiError ? err.message : 'Mã xác thực không hợp lệ' })

@@ -284,7 +284,7 @@ function Disable2FAModal({ onClose }: { onClose: () => void }) {
 export function TwoFASection() {
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showDisableModal, setShowDisableModal] = useState(false)
-  const isTwoFAEnabled = useAuthStore((s) => s.user?.isTwoFAEnabled ?? false)
+  const isTwoFAEnabled = useAuthStore((s) => s.user?.isTwoFactorEnabled ?? false)
 
   return (
     <>

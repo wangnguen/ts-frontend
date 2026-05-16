@@ -87,7 +87,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     try {
       await authApi.confirm2FA(code, twoFASetup.setUpToken)
       const currentUser = useAuthStore.getState().user
-      if (currentUser) useAuthStore.getState().setUser({ ...currentUser, isTwoFAEnabled: true })
+      if (currentUser) useAuthStore.getState().setUser({ ...currentUser, isTwoFactorEnabled: true })
       set({ twoFASetup: null })
       toast.success('Xác thực 2 yếu tố đã được kích hoạt!')
     } catch (err) {
@@ -102,7 +102,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     try {
       await authApi.disable2FA(code)
       const currentUser = useAuthStore.getState().user
-      if (currentUser) useAuthStore.getState().setUser({ ...currentUser, isTwoFAEnabled: false })
+      if (currentUser) useAuthStore.getState().setUser({ ...currentUser, isTwoFactorEnabled: false })
       toast.success('Đã tắt xác thực 2 yếu tố.')
     } catch (err) {
       set({ twoFAError: err instanceof ApiError ? err.message : 'Không thể tắt 2FA' })

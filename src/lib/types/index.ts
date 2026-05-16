@@ -13,7 +13,7 @@ export interface AuthUser {
   role: 'user' | 'admin'
   googleId: string | null
   avatarUrl: string | null
-  isTwoFAEnabled: boolean
+  isTwoFactorEnabled: boolean
 }
 
 export interface AuthResponse {
