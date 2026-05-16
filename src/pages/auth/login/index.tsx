@@ -26,7 +26,6 @@ export default function LoginPage() {
 
 	return (
 		<div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-			{/* Blob decorations */}
 			<div
 				className="clay-blob blob-float w-80 h-80 -top-20 -left-20"
 				style={{ background: "rgba(167,139,250,0.35)" }}

@@ -7,7 +7,6 @@ export const axiosInstance = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
-// Bare instance for internal token-refresh calls — NO interceptors to avoid retry loops
 export const refreshClient = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },

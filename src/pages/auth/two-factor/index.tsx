@@ -24,7 +24,6 @@ export default function TwoFactorPage() {
 
 	return (
 		<div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-			{/* Blob decorations */}
 			<div
 				className="clay-blob blob-float w-64 h-64 -top-10 -left-10"
 				style={{ background: "rgba(167,139,250,0.28)" }}

@@ -1,6 +1,3 @@
-// Backward-compatible re-exports — existing pages import from here unchanged.
-// New code should import directly from the service modules.
-
 export { ApiError, setTokens, clearTokens, getAccessToken, getRefreshToken } from './axios'
 
 export type {
@@ -29,8 +26,6 @@ export type {
 import { authService } from './services/auth.service'
 import { usersService } from './services/users.service'
 
-// ── authApi (matches original call signatures) ────────────────────────────────
-
 export const authApi = {
   register: authService.register,
   loginPassword: authService.loginPassword,
@@ -48,8 +43,6 @@ export const authApi = {
   disable2FA: (code: string) => authService.disable2FA({ code }),
 }
 
-// ── usersApi (matches original call signatures) ───────────────────────────────
-
 export const usersApi = {
   getMe: usersService.getMe,
   updateMe: usersService.updateMe,
@@ -57,8 +50,6 @@ export const usersApi = {
     usersService.changePassword({ currentPassword, newPassword, confirmPassword }),
   deleteAccount: usersService.deleteAccount,
 }
-
-// ── Direct service exports ────────────────────────────────────────────────────
 
 export { authService } from './services/auth.service'
 export { usersService } from './services/users.service'

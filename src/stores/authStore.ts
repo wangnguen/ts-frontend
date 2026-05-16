@@ -54,7 +54,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   logout: async () => {
     const { refreshToken } = get()
     if (refreshToken) {
-      try { await authApi.logout(refreshToken) } catch { /* ignore */ }
+      await authApi.logout(refreshToken).catch(() => {})
     }
     clearTokens()
     localStorage.removeItem('user')

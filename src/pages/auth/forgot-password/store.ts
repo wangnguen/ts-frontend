@@ -43,7 +43,7 @@ export const useForgotPasswordStore = create<ForgotPasswordState>((set, get) => 
     try {
       await authApi.forgotPassword(email)
     } catch {
-      /* silent */
+      // intentionally ignored — resend silently fails
     } finally {
       set({ loading: false })
     }

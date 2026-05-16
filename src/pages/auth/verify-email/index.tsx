@@ -34,7 +34,6 @@ export default function VerifyEmailPage() {
 
 	return (
 		<div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-			{/* Blob decorations */}
 			<div
 				className="clay-blob blob-float-slow w-72 h-72 -top-16 -right-16"
 				style={{ background: "rgba(167,139,250,0.28)" }}

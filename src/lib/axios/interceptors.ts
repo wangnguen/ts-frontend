@@ -1,16 +1,12 @@
 import { type AxiosInstance, type AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { axiosInstance, refreshClient } from './config'
 
-// ── Custom config flag ────────────────────────────────────────────────────────
-
 declare module 'axios' {
   interface AxiosRequestConfig {
     skipAuth?: boolean
     _retry?: boolean
   }
 }
-
-// ── Token helpers ─────────────────────────────────────────────────────────────
 
 export function getAccessToken(): string | null {
   return localStorage.getItem('accessToken')
@@ -27,8 +23,6 @@ export function clearTokens(): void {
   localStorage.removeItem('refreshToken')
 }
 
-// ── ApiError ──────────────────────────────────────────────────────────────────
-
 export class ApiError extends Error {
   constructor(
     public readonly status: number,
@@ -44,8 +38,6 @@ function toApiError(error: AxiosError): ApiError {
   const body = error.response?.data as { message?: string } | undefined
   return new ApiError(error.response?.status ?? 0, body?.message ?? error.message, body)
 }
-
-// ── Refresh token state ───────────────────────────────────────────────────────
 
 let isRefreshing = false
 let refreshQueue: Array<(token: string | null) => void> = []
@@ -69,10 +61,7 @@ async function doRefresh(): Promise<string | null> {
   }
 }
 
-// ── Attach interceptors ───────────────────────────────────────────────────────
-
 export function applyInterceptors(instance: AxiosInstance): void {
-  // Request — attach access token unless skipAuth
   instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     if (!config.skipAuth) {
       const token = getAccessToken()
@@ -81,7 +70,6 @@ export function applyInterceptors(instance: AxiosInstance): void {
     return config
   })
 
-  // Response — unwrap envelope { statusCode, message, data } → data; 401 → refresh & retry
   instance.interceptors.response.use(
     (response) => {
       if (response.status === 204) return response

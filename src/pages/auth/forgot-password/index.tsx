@@ -8,7 +8,6 @@ export default function ForgotPasswordPage() {
 
 	return (
 		<div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-			{/* Blob decorations */}
 			<div
 				className="clay-blob blob-float w-64 h-64 -top-12 -left-12"
 				style={{ background: "rgba(167,139,250,0.30)" }}
