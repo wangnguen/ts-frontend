@@ -49,8 +49,8 @@ export interface LoginPasswordRequest {
 }
 
 export interface Login2FARequest {
-  email: string
-  password: string
+  email?: string
+  password?: string
   pendingToken: string
   code: string
 }

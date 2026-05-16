@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams, Link } from 'react-router-dom'
-import { authApi, ApiError } from '@lib/api'
+import { authApi, ApiError, type AuthResponse } from '@lib/api'
 import { useAuthStore } from '@stores/authStore'
 import { AuthLogo } from '../components'
 
@@ -16,7 +16,7 @@ function Spinner() {
 export default function CallbackPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const setAuth = useAuthStore((s) => s.setAuth)
+  const { setAuth, setPending2FA } = useAuthStore()
   const [error, setError] = useState<string | null>(null)
   const called = useRef(false)
 
@@ -36,8 +36,13 @@ export default function CallbackPage() {
     authApi
       .googleCallback(code, state)
       .then((res) => {
-        setAuth(res)
-        navigate('/dashboard', { replace: true })
+        if ('requiresTwoFactor' in res && res.requiresTwoFactor) {
+          setPending2FA(res.pendingToken)
+          navigate('/2fa', { replace: true })
+        } else {
+          setAuth(res as AuthResponse)
+          navigate('/dashboard', { replace: true })
+        }
       })
       .catch((err) => {
         setError(err instanceof ApiError ? err.message : 'Đăng nhập bằng Google thất bại.')

@@ -12,7 +12,7 @@ interface AuthState {
 
   setAuth: (data: AuthResponse) => void
   setUser: (user: AuthUser) => void
-  setPending2FA: (token: string, email: string, password: string) => void
+  setPending2FA: (token: string, email?: string, password?: string) => void
   logout: () => Promise<void>
   initAuth: () => Promise<void>
 }
@@ -40,8 +40,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setUser: (user: AuthUser) => set({ user }),
 
-  setPending2FA: (token: string, email: string, password: string) => {
-    set({ pendingToken: token, pendingEmail: email, pendingPassword: password })
+  setPending2FA: (token: string, email?: string, password?: string) => {
+    set({ pendingToken: token, pendingEmail: email ?? null, pendingPassword: password ?? null })
   },
 
   logout: async () => {

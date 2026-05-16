@@ -28,6 +28,7 @@ export const authApi = {
   register: authService.register,
   loginPassword: authService.loginPassword,
   login2FA: authService.login2FA,
+  verifyGoogle2FA: authService.verifyGoogle2FA,
   logout: authService.logout,
   refreshToken: authService.refreshToken,
   forgotPassword: (email: string) => authService.forgotPassword({ email }),

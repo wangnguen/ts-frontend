@@ -16,13 +16,18 @@ export const useTwoFactorStore = create<TwoFactorState>((set) => ({
 
   submit: async (otp, navigate) => {
     const { pendingToken, pendingEmail, pendingPassword } = useAuthStore.getState()
-    if (!pendingToken || !pendingEmail || !pendingPassword) {
+    if (!pendingToken) {
       set({ error: 'Phiên đăng nhập hết hạn, vui lòng đăng nhập lại' })
       return
     }
     set({ error: '', loading: true })
     try {
-      const res = await authApi.login2FA({ email: pendingEmail, password: pendingPassword, pendingToken, code: otp })
+      // Google flow: no email/password → use /auth/2fa/verify
+      // Password flow: email+password present → use /auth/login with all fields
+      const res =
+        pendingEmail && pendingPassword
+          ? await authApi.login2FA({ pendingToken, code: otp, email: pendingEmail, password: pendingPassword })
+          : await authApi.verifyGoogle2FA(pendingToken, otp)
       useAuthStore.getState().setAuth({ ...res, user: { ...res.user, isTwoFactorEnabled: true } })
       navigate('/dashboard')
     } catch (err) {

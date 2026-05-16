@@ -42,6 +42,11 @@ export async function login2FA(payload: Login2FARequest): Promise<AuthResponse> 
   return data
 }
 
+export async function verifyGoogle2FA(pendingToken: string, code: string): Promise<AuthResponse> {
+  const { data } = await http.post<AuthResponse>('/auth/2fa/verify', { pendingToken, code }, { skipAuth: true })
+  return data
+}
+
 // RT là HTTP-only cookie — BE tự đọc, không cần gửi body
 export async function logout(): Promise<void> {
   await http.post('/auth/logout', undefined, { skipAuth: true })
@@ -59,8 +64,8 @@ export async function getGoogleAuthUrl(): Promise<GoogleOAuthUrlData> {
   return data
 }
 
-export async function googleCallback(payload: GoogleCallbackRequest): Promise<AuthResponse> {
-  const { data } = await http.post<AuthResponse>('/auth/google/callback', payload, {
+export async function googleCallback(payload: GoogleCallbackRequest): Promise<AuthResponse | TwoFactorRequired> {
+  const { data } = await http.post<AuthResponse | TwoFactorRequired>('/auth/google/callback', payload, {
     skipAuth: true
   })
   return data
@@ -95,6 +100,7 @@ export const authService = {
   register,
   loginPassword,
   login2FA,
+  verifyGoogle2FA,
   logout,
   refreshToken,
   getGoogleAuthUrl,
