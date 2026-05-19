@@ -16,6 +16,8 @@ import VerifyEmailPage from './pages/auth/verify-email'
 import CallbackPage from './pages/auth/callback'
 
 import DashboardPage from './pages/dashboard'
+import MonitorsPage from './pages/monitors'
+import StoragePage from './pages/storage'
 import SettingsPage from './pages/settings'
 import NotFoundPage from './pages/not-found'
 
@@ -73,6 +75,26 @@ function App() {
             <ProtectedRoute>
               <AppLayout>
                 <DashboardPage />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/monitors'
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <MonitorsPage />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/storage'
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <StoragePage />
               </AppLayout>
             </ProtectedRoute>
           }
