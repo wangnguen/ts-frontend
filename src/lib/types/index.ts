@@ -100,3 +100,73 @@ export interface ChangePasswordRequest {
   newPassword: string
   confirmPassword: string
 }
+
+// ─── Monitors ────────────────────────────────────────────────────────────────
+
+export type MonitorType = 'http' | 'https' | 'tcp' | 'ping'
+export type MonitorStatus = 'up' | 'down' | 'pending'
+
+export interface Monitor {
+  id: string
+  name: string
+  type: MonitorType
+  target: string
+  interval: number
+  timeout: number
+  retries: number
+  isActive: boolean
+  currentStatus: MonitorStatus
+  lastCheckedAt: string | null
+  acceptedStatusCodes: number[]
+  keyword: string | null
+  userId: string
+}
+
+export interface CreateMonitorRequest {
+  name: string
+  type?: MonitorType
+  target: string
+  interval?: number
+  timeout?: number
+  retries?: number
+  isActive?: boolean
+  acceptedStatusCodes?: number[]
+  keyword?: string
+}
+
+export type UpdateMonitorRequest = Partial<CreateMonitorRequest>
+
+export interface PaginatedMonitors {
+  items: Monitor[]
+  total: number
+  page: number
+  limit: number
+}
+
+// ─── Storage ─────────────────────────────────────────────────────────────────
+
+export interface StorageFile {
+  name: string
+  path: string
+  size: number
+  mimeType: string
+  createdAt: string
+  url: string
+}
+
+export interface StorageFolder {
+  name: string
+  path: string
+}
+
+export interface UploadFilesResponse {
+  files: StorageFile[]
+}
+
+export interface StorageListResponse {
+  files: StorageFile[]
+}
+
+export interface FolderListResponse {
+  folders: StorageFolder[]
+}
