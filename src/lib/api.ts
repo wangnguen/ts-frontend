@@ -18,11 +18,21 @@ export type {
   Confirm2FARequest,
   Disable2FARequest,
   UpdateProfileRequest,
-  ChangePasswordRequest
+  ChangePasswordRequest,
+  Monitor,
+  MonitorType,
+  MonitorStatus,
+  CreateMonitorRequest,
+  UpdateMonitorRequest,
+  PaginatedMonitors,
+  StorageFile,
+  StorageFolder
 } from './types'
 
 import { authService } from './services/auth.service'
 import { usersService } from './services/users.service'
+import { monitorsService } from './services/monitors.service'
+import { storageService } from './services/storage.service'
 
 export const authApi = {
   register: authService.register,
@@ -50,5 +60,27 @@ export const usersApi = {
   deleteAccount: usersService.deleteAccount
 }
 
+export const monitorsApi = {
+  getMonitors: monitorsService.getMonitors,
+  getMonitor: monitorsService.getMonitor,
+  createMonitor: monitorsService.createMonitor,
+  updateMonitor: monitorsService.updateMonitor,
+  deleteMonitor: monitorsService.deleteMonitor,
+  pauseMonitor: monitorsService.pauseMonitor,
+  startMonitor: monitorsService.startMonitor
+}
+
+export const storageApi = {
+  uploadFiles: storageService.uploadFiles,
+  renameFile: storageService.renameFile,
+  deleteFile: storageService.deleteFile,
+  createFolder: storageService.createFolder,
+  listFolders: storageService.listFolders,
+  listFiles: storageService.listFiles,
+  deleteFolder: storageService.deleteFolder
+}
+
 export { authService } from './services/auth.service'
 export { usersService } from './services/users.service'
+export { monitorsService } from './services/monitors.service'
+export { storageService } from './services/storage.service'
