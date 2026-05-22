@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TriangleAlert } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useAuthStore } from '@stores/authStore'
 import { useSettingsStore } from './store'
@@ -127,7 +128,7 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
                     onClick={() => setStep('otp')}
                     className='flex-1 py-2.5 rounded-xl text-sm font-bold text-white cursor-pointer transition-all'
                     style={{
-                      background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
+                      background: 'var(--cta)',
                       boxShadow: 'var(--clay-shadow-btn)'
                     }}
                   >
@@ -167,7 +168,7 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
                 disabled={twoFALoading}
                 className='flex-1 py-2.5 rounded-xl text-sm font-bold text-white cursor-pointer disabled:opacity-60 transition-all'
                 style={{
-                  background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
+                  background: 'var(--cta)',
                   boxShadow: 'var(--clay-shadow-btn)'
                 }}
               >
@@ -215,20 +216,7 @@ function Disable2FAModal({ onClose }: { onClose: () => void }) {
             className='w-11 h-11 rounded-2xl flex items-center justify-center shrink-0'
             style={{ background: 'rgba(239,68,68,0.1)', border: '1.5px solid rgba(239,68,68,0.2)' }}
           >
-            <svg
-              className='w-5 h-5'
-              style={{ color: 'var(--color-down)' }}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z'
-              />
-            </svg>
+            <TriangleAlert className='w-5 h-5' style={{ color: 'var(--color-down)' }} strokeWidth={2} />
           </div>
           <div className='flex-1'>
             <h3 className='font-extrabold text-base' style={{ color: 'var(--color-text)' }}>
@@ -332,7 +320,7 @@ export function TwoFASection() {
             }}
             className='px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-150 cursor-pointer'
             style={{
-              background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
+              background: 'var(--cta)',
               boxShadow: 'var(--clay-shadow-btn)'
             }}
           >

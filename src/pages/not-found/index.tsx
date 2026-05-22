@@ -1,3 +1,4 @@
+import { SearchX, ChevronLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '@stores/authStore'
 
@@ -26,7 +27,7 @@ export default function NotFoundPage() {
           <span
             className='text-[8rem] font-extrabold leading-none select-none'
             style={{
-              background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
+              background: 'var(--cta)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -42,21 +43,7 @@ export default function NotFoundPage() {
             className='w-14 h-14 rounded-2xl flex items-center justify-center mx-auto'
             style={{ background: 'var(--color-primary-light)' }}
           >
-            <svg
-              width='26'
-              height='26'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='var(--color-primary)'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            >
-              <circle cx='11' cy='11' r='8' />
-              <line x1='21' y1='21' x2='16.65' y2='16.65' />
-              <line x1='11' y1='8' x2='11' y2='11' />
-              <line x1='11' y1='14' x2='11.01' y2='14' />
-            </svg>
+            <SearchX size={26} stroke='var(--color-primary)' strokeWidth={2} />
           </div>
 
           <div>
@@ -72,24 +59,13 @@ export default function NotFoundPage() {
             to={isAuthenticated ? '/dashboard' : '/login'}
             className='inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all duration-150'
             style={{
-              background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
+              background: 'var(--cta)',
               boxShadow: 'var(--clay-shadow-btn)'
             }}
             onMouseEnter={(e) => (e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn-hover)')}
             onMouseLeave={(e) => (e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn)')}
           >
-            <svg
-              width='16'
-              height='16'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2.5'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            >
-              <polyline points='15 18 9 12 15 6' />
-            </svg>
+            <ChevronLeft size={16} />
             {isAuthenticated ? 'Về Dashboard' : 'Về trang đăng nhập'}
           </Link>
         </div>

@@ -1,95 +1,13 @@
 import type { ReactNode } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { LayoutDashboard, Monitor, Folder, Settings, LogOut } from 'lucide-react'
 import { useAuthStore } from '@stores/authStore'
 
-const IconDashboard = () => (
-  <svg
-    width='18'
-    height='18'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2.2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <rect x='3' y='3' width='7' height='7' rx='1' />
-    <rect x='14' y='3' width='7' height='7' rx='1' />
-    <rect x='14' y='14' width='7' height='7' rx='1' />
-    <rect x='3' y='14' width='7' height='7' rx='1' />
-  </svg>
-)
-
-const IconMonitor = () => (
-  <svg
-    width='18'
-    height='18'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2.2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <rect x='2' y='3' width='20' height='14' rx='2' />
-    <line x1='8' y1='21' x2='16' y2='21' />
-    <line x1='12' y1='17' x2='12' y2='21' />
-  </svg>
-)
-
-const IconStorage = () => (
-  <svg
-    width='18'
-    height='18'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2.2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z' />
-  </svg>
-)
-
-const IconSettings = () => (
-  <svg
-    width='18'
-    height='18'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2.2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <circle cx='12' cy='12' r='3' />
-    <path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' />
-  </svg>
-)
-
-const IconLogout = () => (
-  <svg
-    width='16'
-    height='16'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2.2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4' />
-    <polyline points='16 17 21 12 16 7' />
-    <line x1='21' y1='12' x2='9' y2='12' />
-  </svg>
-)
-
 const navItems = [
-  { to: '/dashboard', label: 'Dashboard', icon: <IconDashboard /> },
-  { to: '/monitors', label: 'Monitors', icon: <IconMonitor /> },
-  { to: '/storage', label: 'Storage', icon: <IconStorage /> },
-  { to: '/settings', label: 'Cài đặt', icon: <IconSettings /> }
+  { to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={18} /> },
+  { to: '/monitors', label: 'Monitors', icon: <Monitor size={18} /> },
+  { to: '/storage', label: 'Storage', icon: <Folder size={18} /> },
+  { to: '/settings', label: 'Cài đặt', icon: <Settings size={18} /> }
 ]
 
 function getInitials(name: string) {
@@ -115,15 +33,15 @@ function Sidebar() {
       className='fixed top-0 left-0 h-screen w-64 flex flex-col z-20'
       style={{
         background: 'var(--color-surface)',
-        borderRight: '2px solid var(--color-border)',
-        boxShadow: 'var(--clay-shadow-md)'
+        borderRight: '3px solid var(--text)',
+        boxShadow: '4px 0 0 rgba(45,55,72,0.06)'
       }}
     >
       {/* Logo */}
-      <div className='px-6 py-5 flex items-center gap-3' style={{ borderBottom: '1px solid var(--color-border)' }}>
+      <div className='px-6 py-5 flex items-center gap-3' style={{ borderBottom: '2px solid var(--text)' }}>
         <div
           className='w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0'
-          style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+          style={{ background: 'var(--cta)', border: '2px solid var(--text)', boxShadow: '2px 2px 0 var(--text)' }}
         >
           U
         </div>
@@ -149,8 +67,9 @@ function Sidebar() {
             style={({ isActive }) =>
               isActive
                 ? {
-                    background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
-                    boxShadow: 'var(--clay-shadow-btn)'
+                    background: 'var(--cta)',
+                    border: '2px solid var(--text)',
+                    boxShadow: '3px 3px 0 var(--text)'
                   }
                 : {}
             }
@@ -174,7 +93,11 @@ function Sidebar() {
           ) : (
             <div
               className='w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0'
-              style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+              style={{
+                background: 'var(--primary)',
+                border: '2px solid var(--text)',
+                boxShadow: '2px 2px 0 var(--text)'
+              }}
             >
               {user ? getInitials(user.fullName) : '?'}
             </div>
@@ -195,7 +118,7 @@ function Sidebar() {
           className='w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer btn-ghost-danger'
           style={{ color: 'var(--color-down)' }}
         >
-          <IconLogout />
+          <LogOut size={16} />
           Đăng xuất
         </button>
       </div>

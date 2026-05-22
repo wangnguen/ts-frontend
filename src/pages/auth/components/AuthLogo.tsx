@@ -1,3 +1,4 @@
+import { CheckCircle2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 interface Props {
@@ -10,18 +11,12 @@ export function AuthLogo({ href }: Props) {
       <div
         className='w-10 h-10 rounded-2xl flex items-center justify-center'
         style={{
-          background: 'linear-gradient(135deg, #7C3AED 0%, #A855F7 100%)',
-          boxShadow: '0 6px 16px rgba(124,58,237,0.4)'
+          background: 'var(--cta)',
+          border: '2px solid var(--text)',
+          boxShadow: '3px 3px 0 var(--text)'
         }}
       >
-        <svg className='w-5 h-5 text-white' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2.5}
-            d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
-          />
-        </svg>
+        <CheckCircle2 className='w-5 h-5 text-white' strokeWidth={2.5} />
       </div>
       <span className='text-xl font-extrabold' style={{ color: 'var(--color-text)' }}>
         TS<span style={{ color: 'var(--color-primary)' }}>Uptime</span>

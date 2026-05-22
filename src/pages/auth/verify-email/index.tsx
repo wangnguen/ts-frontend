@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Mail, Check } from 'lucide-react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { otpSchema, type OtpInput as OtpFormValues } from '@lib/schemas/auth'
 import { useVerifyEmailStore } from './store'
@@ -55,25 +56,12 @@ export default function VerifyEmailPage() {
                 <div
                   className='w-16 h-16 rounded-2xl flex items-center justify-center'
                   style={{
-                    background: 'linear-gradient(135deg, rgba(124,58,237,0.12), rgba(168,85,247,0.12))',
+                    background: 'var(--color-primary-light)',
                     border: '2px solid rgba(124,58,237,0.2)',
                     boxShadow: '0 8px 24px rgba(124,58,237,0.15)'
                   }}
                 >
-                  <svg
-                    className='w-8 h-8'
-                    style={{ color: 'var(--color-primary)' }}
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={1.8}
-                      d='M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75'
-                    />
-                  </svg>
+                  <Mail className='w-8 h-8' style={{ color: 'var(--color-primary)' }} strokeWidth={1.8} />
                 </div>
               </div>
               <h1 className='text-2xl font-extrabold' style={{ color: 'var(--color-text)' }}>
@@ -122,20 +110,12 @@ export default function VerifyEmailPage() {
                 <div
                   className='w-16 h-16 rounded-2xl flex items-center justify-center'
                   style={{
-                    background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(52,211,153,0.12))',
+                    background: 'var(--color-primary-light)',
                     border: '2px solid rgba(16,185,129,0.3)',
                     boxShadow: '0 8px 24px rgba(16,185,129,0.2)'
                   }}
                 >
-                  <svg
-                    className='w-8 h-8'
-                    style={{ color: 'var(--color-up)' }}
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2.5} d='M5 13l4 4L19 7' />
-                  </svg>
+                  <Check className='w-8 h-8' style={{ color: 'var(--color-up)' }} strokeWidth={2.5} />
                 </div>
               </div>
               <h1 className='text-2xl font-extrabold' style={{ color: 'var(--color-text)' }}>
@@ -152,17 +132,17 @@ export default function VerifyEmailPage() {
                 onClick={() => navigate('/login')}
                 className='w-full py-3 px-4 rounded-2xl text-sm font-bold transition-all duration-200 cursor-pointer'
                 style={{
-                  background: 'linear-gradient(135deg, #7C3AED 0%, #A855F7 100%)',
+                  background: 'var(--cta)',
                   color: '#FFFFFF',
                   boxShadow: 'var(--clay-shadow-btn)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #6D28D9 0%, #9333EA 100%)'
+                  e.currentTarget.style.background = 'var(--cta-dark)'
                   e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn-hover)'
                   e.currentTarget.style.transform = 'translateY(-2px)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #7C3AED 0%, #A855F7 100%)'
+                  e.currentTarget.style.background = 'var(--cta)'
                   e.currentTarget.style.boxShadow = 'var(--clay-shadow-btn)'
                   e.currentTarget.style.transform = 'translateY(0px)'
                 }}

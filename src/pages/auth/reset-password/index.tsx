@@ -44,11 +44,7 @@ function ProgressBar({ steps, current }: { steps: Step[]; current: Step }) {
             className='w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300'
             style={{
               background:
-                current === s
-                  ? 'linear-gradient(135deg, #7C3AED, #A855F7)'
-                  : i < steps.indexOf(current)
-                    ? 'rgba(124,58,237,0.15)'
-                    : '#E5E7EB',
+                current === s ? 'var(--cta)' : i < steps.indexOf(current) ? 'rgba(124,58,237,0.15)' : '#E5E7EB',
               color: current === s ? '#FFFFFF' : i < steps.indexOf(current) ? 'var(--color-primary)' : '#9CA3AF',
               boxShadow: current === s ? '0 4px 12px rgba(124,58,237,0.4)' : 'none'
             }}
@@ -59,7 +55,7 @@ function ProgressBar({ steps, current }: { steps: Step[]; current: Step }) {
             <div
               className='w-8 h-0.5 rounded-full'
               style={{
-                background: i < steps.indexOf(current) ? 'linear-gradient(90deg, #7C3AED, #A855F7)' : '#E5E7EB'
+                background: i < steps.indexOf(current) ? 'var(--cta)' : '#E5E7EB'
               }}
             />
           )}

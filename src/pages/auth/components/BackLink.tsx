@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { ArrowLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 interface Props {
@@ -16,9 +17,7 @@ export function BackLink({ to, children }: Props) {
         onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-primary)')}
         onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
       >
-        <svg className='w-4 h-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2.5} d='M10 19l-7-7m0 0l7-7m-7 7h18' />
-        </svg>
+        <ArrowLeft size={16} />
         {children}
       </Link>
     </p>

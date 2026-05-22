@@ -1,55 +1,9 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Plus, Monitor as MonitorIcon, ArrowRight, Loader2 } from 'lucide-react'
 import { useAuthStore } from '@stores/authStore'
 import { useMonitorsStore } from '@pages/monitors/store'
 import type { Monitor, MonitorType } from '@lib/types'
-
-const IconPlus = () => (
-  <svg
-    width='16'
-    height='16'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2.5'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <line x1='12' y1='5' x2='12' y2='19' />
-    <line x1='5' y1='12' x2='19' y2='12' />
-  </svg>
-)
-const IconMonitor = () => (
-  <svg
-    width='20'
-    height='20'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <rect x='2' y='3' width='20' height='14' rx='2' />
-    <line x1='8' y1='21' x2='16' y2='21' />
-    <line x1='12' y1='17' x2='12' y2='21' />
-  </svg>
-)
-const IconArrowRight = () => (
-  <svg
-    width='14'
-    height='14'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2.5'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    <line x1='5' y1='12' x2='19' y2='12' />
-    <polyline points='12 5 19 12 12 19' />
-  </svg>
-)
 
 const STATUS_CONFIG = {
   up: { label: 'Hoạt động', color: 'var(--color-up)', bg: 'rgba(16,185,129,0.12)' },
@@ -147,11 +101,11 @@ export default function DashboardPage() {
           onClick={openCreateModal}
           className='flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 cursor-pointer btn-primary'
           style={{
-            background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
+            background: 'var(--cta)',
             boxShadow: 'var(--clay-shadow-btn)'
           }}
         >
-          <IconPlus />
+          <Plus size={16} />
           Thêm monitor
         </button>
       </div>
@@ -183,27 +137,14 @@ export default function DashboardPage() {
               className='flex items-center gap-1.5 text-xs font-bold cursor-pointer transition-all duration-150'
               style={{ color: 'var(--color-primary)' }}
             >
-              Xem tất cả <IconArrowRight />
+              Xem tất cả <ArrowRight size={14} />
             </button>
           )}
         </div>
 
         {isLoading ? (
           <div className='py-10 flex items-center justify-center'>
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2.5'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              className='animate-spin'
-              style={{ color: 'var(--color-muted)' }}
-            >
-              <path d='M21 12a9 9 0 1 1-6.219-8.56' />
-            </svg>
+            <Loader2 size={20} className='animate-spin' style={{ color: 'var(--color-muted)' }} />
           </div>
         ) : monitors.length === 0 ? (
           <div className='flex flex-col items-center gap-3 py-10 text-center'>
@@ -211,7 +152,7 @@ export default function DashboardPage() {
               className='w-12 h-12 rounded-2xl flex items-center justify-center'
               style={{ background: 'var(--color-primary-light)', color: 'var(--color-primary)' }}
             >
-              <IconMonitor />
+              <MonitorIcon size={20} />
             </div>
             <div>
               <p className='text-sm font-extrabold' style={{ color: 'var(--color-text)' }}>
@@ -225,11 +166,11 @@ export default function DashboardPage() {
               onClick={openCreateModal}
               className='flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white cursor-pointer btn-primary'
               style={{
-                background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
+                background: 'var(--cta)',
                 boxShadow: 'var(--clay-shadow-btn)'
               }}
             >
-              <IconPlus />
+              <Plus size={16} />
               Thêm monitor đầu tiên
             </button>
           </div>
