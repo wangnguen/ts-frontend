@@ -57,7 +57,7 @@ export default function SettingsPage() {
             style={
               activeTab === tab.key
                 ? {
-                    background: 'linear-gradient(135deg, var(--color-primary), #9333ea)',
+                    background: 'var(--cta)',
                     color: '#fff',
                     boxShadow: 'var(--clay-shadow-btn)'
                   }
