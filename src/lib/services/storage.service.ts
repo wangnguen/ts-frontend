@@ -1,5 +1,5 @@
 import { http } from '../axios'
-import type { StorageFile, StorageFolder, UploadFilesResponse, StorageListResponse, FolderListResponse } from '../types'
+import type { StorageFile, StorageFolder, UploadFilesResponse } from '../types'
 
 export async function uploadFiles(files: File[], folderPath?: string): Promise<UploadFilesResponse> {
   const form = new FormData()
@@ -24,17 +24,17 @@ export async function createFolder(folderName: string, folderPath?: string): Pro
 }
 
 export async function listFolders(folderPath?: string): Promise<StorageFolder[]> {
-  const { data } = await http.get<FolderListResponse>('/storage/folder/list', {
+  const { data } = await http.get<{ folderList: StorageFolder[] }>('/storage/folder/list', {
     params: folderPath ? { folderPath } : undefined
   })
-  return (data as unknown as StorageFolder[]) ?? []
+  return data.folderList ?? []
 }
 
 export async function listFiles(folderPath?: string): Promise<StorageFile[]> {
-  const { data } = await http.get<StorageListResponse>('/storage/files/list', {
+  const { data } = await http.get<{ fileList: StorageFile[] }>('/storage/files/list', {
     params: folderPath ? { folderPath } : undefined
   })
-  return (data as unknown as StorageFile[]) ?? []
+  return data.fileList ?? []
 }
 
 export async function deleteFolder(folderPath: string): Promise<void> {

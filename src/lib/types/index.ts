@@ -147,9 +147,9 @@ export interface PaginatedMonitors {
 
 export interface StorageFile {
   name: string
-  path: string
+  path?: string
   size: number
-  mimeType: string
+  mimeType?: string
   createdAt: string
   url: string
 }
