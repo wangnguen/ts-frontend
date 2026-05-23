@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { authApi, ApiError } from '@lib/api'
+import { authService, ApiError } from '@lib/api'
 import { useAuthStore } from '@stores/authStore'
 
 interface TwoFactorState {
@@ -26,8 +26,8 @@ export const useTwoFactorStore = create<TwoFactorState>((set) => ({
       // Password flow: email+password present → use /auth/login with all fields
       const res =
         pendingEmail && pendingPassword
-          ? await authApi.login2FA({ pendingToken, code: otp, email: pendingEmail, password: pendingPassword })
-          : await authApi.verifyGoogle2FA(pendingToken, otp)
+          ? await authService.login2FA({ pendingToken, code: otp, email: pendingEmail, password: pendingPassword })
+          : await authService.verifyGoogle2FA(pendingToken, otp)
       useAuthStore.getState().setAuth({ ...res, user: { ...res.user, isTwoFactorEnabled: true } })
       navigate('/dashboard')
     } catch (err) {

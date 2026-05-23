@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { authApi, ApiError } from '@lib/api'
+import { authService, ApiError } from '@lib/api'
 
 interface VerifyEmailState {
   loading: boolean
@@ -18,7 +18,7 @@ export const useVerifyEmailStore = create<VerifyEmailState>((set) => ({
   submit: async (otp) => {
     set({ error: '', loading: true })
     try {
-      await authApi.verifyEmail(otp)
+      await authService.verifyEmail({ token: otp })
       set({ verified: true })
     } catch (err) {
       set({ error: err instanceof ApiError ? err.message : 'Xác thực thất bại' })

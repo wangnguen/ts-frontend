@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { authApi, ApiError } from '@lib/api'
+import { authService, ApiError } from '@lib/api'
 import type { ResetPasswordInput } from '@lib/schemas/auth'
 
 export type ResetPasswordStep = 'otp' | 'password' | 'done'
@@ -29,7 +29,11 @@ export const useResetPasswordStore = create<ResetPasswordState>((set, get) => ({
     const { otpCode } = get()
     set({ error: '', loading: true })
     try {
-      await authApi.resetPassword(otpCode, data.password, data.confirmPassword)
+      await authService.resetPassword({
+        token: otpCode,
+        password: data.password,
+        confirmPassword: data.confirmPassword
+      })
       set({ step: 'done' })
     } catch (err) {
       set({ error: err instanceof ApiError ? err.message : 'Đặt lại mật khẩu thất bại' })

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams, Link } from 'react-router-dom'
-import { authApi, ApiError, type AuthResponse } from '@lib/api'
+import { authService, ApiError, type AuthResponse } from '@lib/api'
 import { useAuthStore } from '@stores/authStore'
 import { AuthLogo } from '../components'
 
@@ -33,8 +33,8 @@ export default function CallbackPage() {
       return
     }
 
-    authApi
-      .googleCallback(code, state)
+    authService
+      .googleCallback({ code, state })
       .then((res) => {
         if ('requiresTwoFactor' in res && res.requiresTwoFactor) {
           setPending2FA(res.pendingToken)
@@ -44,7 +44,7 @@ export default function CallbackPage() {
           navigate('/dashboard', { replace: true })
         }
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         setError(err instanceof ApiError ? err.message : 'Đăng nhập bằng Google thất bại.')
       })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { type AuthUser, type AuthResponse, authApi, usersApi, setAccessToken } from '../lib/api'
+import { type AuthUser, type AuthResponse, authService, usersService, setAccessToken } from '../lib/api'
 
 interface AuthState {
   user: AuthUser | null
@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: async () => {
-    await authApi.logout().catch(() => {})
+    await authService.logout().catch(() => {})
     setAccessToken(null)
     localStorage.removeItem('hasSession')
     set({
@@ -65,9 +65,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       return
     }
     try {
-      const { accessToken } = await authApi.refreshToken()
+      const { accessToken } = await authService.refreshToken()
       setAccessToken(accessToken)
-      const user = await usersApi.getMe()
+      const user = await usersService.getMe()
       set({ user, accessToken, isAuthenticated: true, initialized: true })
     } catch {
       setAccessToken(null)

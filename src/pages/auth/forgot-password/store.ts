@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { authApi, ApiError } from '@lib/api'
+import { authService, ApiError } from '@lib/api'
 import type { ForgotPasswordInput } from '@lib/schemas/auth'
 
 export type ForgotPasswordStep = 'form' | 'sent'
@@ -24,7 +24,7 @@ export const useForgotPasswordStore = create<ForgotPasswordState>((set, get) => 
   submit: async (data) => {
     set({ error: '', loading: true })
     try {
-      await authApi.forgotPassword(data.email)
+      await authService.forgotPassword({ email: data.email })
       set({ step: 'sent', email: data.email })
     } catch (err) {
       if (err instanceof ApiError && err.status === 409) {
@@ -41,7 +41,7 @@ export const useForgotPasswordStore = create<ForgotPasswordState>((set, get) => 
     const { email } = get()
     set({ loading: true })
     try {
-      await authApi.forgotPassword(email)
+      await authService.forgotPassword({ email })
     } catch {
       // intentionally ignored — resend silently fails
     } finally {

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { authApi, ApiError } from '@lib/api'
+import { authService, ApiError } from '@lib/api'
 import type { RegisterInput } from '@lib/schemas/auth'
 
 interface RegisterState {
@@ -21,7 +21,7 @@ export const useRegisterStore = create<RegisterState>((set) => ({
   submit: async (data, navigate) => {
     set({ error: '', loading: true })
     try {
-      await authApi.register(data)
+      await authService.register(data)
       navigate('/verify-email')
     } catch (err) {
       set({ error: err instanceof ApiError ? err.message : 'Đăng ký thất bại' })
@@ -32,7 +32,7 @@ export const useRegisterStore = create<RegisterState>((set) => ({
 
   loginWithGoogle: async () => {
     try {
-      const { url } = await authApi.googleAuthUrl()
+      const { url } = await authService.getGoogleAuthUrl()
       window.location.href = url
     } catch {
       set({ error: 'Không thể kết nối Google OAuth' })

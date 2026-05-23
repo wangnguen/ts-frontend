@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { authApi, ApiError, type AuthResponse } from '@lib/api'
+import { authService, ApiError, type AuthResponse } from '@lib/api'
 import { useAuthStore } from '@stores/authStore'
 import type { LoginInput } from '@lib/schemas/auth'
 
@@ -22,7 +22,7 @@ export const useLoginStore = create<LoginState>((set) => ({
   submit: async (data, navigate) => {
     set({ error: '', loading: true })
     try {
-      const res = await authApi.loginPassword({ email: data.email, password: data.password })
+      const res = await authService.loginPassword({ email: data.email, password: data.password })
       if ('requiresTwoFactor' in res && res.requiresTwoFactor) {
         useAuthStore.getState().setPending2FA(res.pendingToken, data.email, data.password)
         navigate('/2fa')
@@ -39,7 +39,7 @@ export const useLoginStore = create<LoginState>((set) => ({
 
   loginWithGoogle: async () => {
     try {
-      const { url } = await authApi.googleAuthUrl()
+      const { url } = await authService.getGoogleAuthUrl()
       window.location.href = url
     } catch {
       set({ error: 'Không thể kết nối Google OAuth' })
