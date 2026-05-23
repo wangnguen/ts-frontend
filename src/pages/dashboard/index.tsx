@@ -98,7 +98,10 @@ export default function DashboardPage() {
           </p>
         </div>
         <button
-          onClick={openCreateModal}
+          onClick={() => {
+            openCreateModal()
+            navigate('/monitors')
+          }}
           className='flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 cursor-pointer btn-primary'
           style={{
             background: 'var(--cta)',
@@ -163,7 +166,10 @@ export default function DashboardPage() {
               </p>
             </div>
             <button
-              onClick={openCreateModal}
+              onClick={() => {
+                openCreateModal()
+                navigate('/monitors')
+              }}
               className='flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white cursor-pointer btn-primary'
               style={{
                 background: 'var(--cta)',
