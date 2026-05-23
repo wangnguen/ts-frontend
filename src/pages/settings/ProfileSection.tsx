@@ -1,14 +1,15 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuthStore } from '@stores/authStore'
-import { useSettingsStore } from './store'
+import { useProfileMutation } from './hooks'
 import { updateProfileSchema, type UpdateProfileInput } from '@lib/schemas/auth'
-import { FieldInput, ErrorBanner } from '../auth/components'
+import { FieldInput } from '../auth/components'
 import { SectionCard, SaveButton } from './components'
 
 export function ProfileSection() {
   const user = useAuthStore((s) => s.user)
-  const { profileLoading, profileError, submitProfile } = useSettingsStore()
+  const mutation = useProfileMutation()
+  const errorMsg = mutation.error instanceof Error ? mutation.error.message : ''
 
   const {
     register,
@@ -21,8 +22,19 @@ export function ProfileSection() {
 
   return (
     <SectionCard title='Thông tin cá nhân'>
-      <form onSubmit={handleSubmit(submitProfile)} className='space-y-4'>
-        <ErrorBanner message={profileError} />
+      <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className='space-y-4'>
+        {errorMsg && (
+          <div
+            className='px-4 py-3 rounded-2xl text-sm font-medium'
+            style={{
+              background: 'rgba(239,68,68,0.07)',
+              border: '2px solid rgba(239,68,68,0.18)',
+              color: '#B91C1C'
+            }}
+          >
+            {errorMsg}
+          </div>
+        )}
         <FieldInput
           id='fullName'
           label='Họ và tên'
@@ -58,7 +70,7 @@ export function ProfileSection() {
           </p>
         </div>
         <div className='pt-1'>
-          <SaveButton loading={profileLoading} />
+          <SaveButton loading={mutation.isPending} />
         </div>
       </form>
     </SectionCard>

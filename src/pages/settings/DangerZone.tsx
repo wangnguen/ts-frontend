@@ -1,17 +1,10 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSettingsStore } from './store'
-import { ErrorBanner } from '../auth/components'
+import { useDeleteAccountMutation } from './hooks'
 
 export function DangerZone() {
-  const navigate = useNavigate()
-  const { deleteLoading, deleteError, deleteAccount } = useSettingsStore()
+  const mutation = useDeleteAccountMutation()
   const [confirm, setConfirm] = useState(false)
-
-  const handleDelete = async () => {
-    await deleteAccount()
-    navigate('/login', { replace: true })
-  }
+  const errorMsg = mutation.error instanceof Error ? mutation.error.message : ''
 
   return (
     <div
@@ -28,7 +21,14 @@ export function DangerZone() {
       <p className='text-sm' style={{ color: 'var(--color-muted)' }}>
         Xóa tài khoản sẽ xóa vĩnh viễn tất cả dữ liệu. Hành động này không thể hoàn tác.
       </p>
-      <ErrorBanner message={deleteError} />
+      {errorMsg && (
+        <div
+          className='px-4 py-3 rounded-2xl text-sm font-medium'
+          style={{ background: 'rgba(239,68,68,0.07)', border: '2px solid rgba(239,68,68,0.18)', color: '#B91C1C' }}
+        >
+          {errorMsg}
+        </div>
+      )}
       {!confirm ? (
         <button
           onClick={() => setConfirm(true)}
@@ -48,12 +48,12 @@ export function DangerZone() {
           </p>
           <div className='flex gap-2'>
             <button
-              onClick={handleDelete}
-              disabled={deleteLoading}
+              onClick={() => mutation.mutate()}
+              disabled={mutation.isPending}
               className='px-4 py-2 rounded-xl text-sm font-bold text-white cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200'
               style={{ background: 'var(--color-down)', boxShadow: '0 4px 12px rgba(239,68,68,0.4)' }}
             >
-              {deleteLoading ? 'Đang xóa...' : 'Xác nhận xóa'}
+              {mutation.isPending ? 'Đang xóa...' : 'Xác nhận xóa'}
             </button>
             <button
               onClick={() => setConfirm(false)}

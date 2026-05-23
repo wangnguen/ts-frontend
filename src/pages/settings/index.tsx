@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useSettingsStore } from './store'
 import { ProfileSection } from './ProfileSection'
 import { PasswordSection } from './PasswordSection'
@@ -7,18 +6,6 @@ import { DangerZone } from './DangerZone'
 
 export default function SettingsPage() {
   const { activeTab, setActiveTab } = useSettingsStore()
-
-  useEffect(() => {
-    return () => {
-      useSettingsStore.setState({
-        profileError: '',
-        passwordError: '',
-        twoFAError: '',
-        twoFASetup: null,
-        deleteError: ''
-      })
-    }
-  }, [])
 
   const tabs = [
     { key: 'profile' as const, label: 'Hồ sơ' },

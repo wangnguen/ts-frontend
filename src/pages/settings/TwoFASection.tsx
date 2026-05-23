@@ -5,8 +5,9 @@ import { TriangleAlert } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useAuthStore } from '@stores/authStore'
 import { useSettingsStore } from './store'
+import { useSetup2FAMutation, useConfirm2FAMutation, useDisable2FAMutation } from './hooks'
 import { otpSchema, type OtpInput as OtpFormValues } from '@lib/schemas/auth'
-import { ErrorBanner, OtpInput } from '../auth/components'
+import { OtpInput } from '../auth/components'
 import { SectionCard, ModalOverlay, ModalCloseBtn } from './components'
 
 function extractTotpSecret(otpauthUrl: string): string {
@@ -37,7 +38,10 @@ function StepDots({ step }: { step: 'qr' | 'otp' }) {
 
 function Setup2FAModal({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState<'qr' | 'otp'>('qr')
-  const { twoFASetup, twoFALoading, twoFAError, startSetup2FA, confirmSetup2FA, cancelSetup2FA } = useSettingsStore()
+  const twoFASetup = useSettingsStore((s) => s.twoFASetup)
+  const setTwoFASetup = useSettingsStore((s) => s.setTwoFASetup)
+  const setup2FA = useSetup2FAMutation()
+  const confirm2FA = useConfirm2FAMutation()
 
   const {
     control,
@@ -47,22 +51,28 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
   } = useForm<OtpFormValues>({ resolver: zodResolver(otpSchema), defaultValues: { otp: '' } })
 
   useEffect(() => {
-    startSetup2FA()
+    setup2FA.mutate()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClose = () => {
-    cancelSetup2FA()
+    setTwoFASetup(null)
+    setup2FA.reset()
+    confirm2FA.reset()
     reset()
     onClose()
   }
 
-  const onConfirm = async ({ otp }: OtpFormValues) => {
-    await confirmSetup2FA(otp)
-    if (!useSettingsStore.getState().twoFAError) {
-      reset()
-      onClose()
-    }
+  const onConfirm = ({ otp }: OtpFormValues) => {
+    confirm2FA.mutate(otp, {
+      onSuccess: () => {
+        reset()
+        onClose()
+      }
+    })
   }
+
+  const setupErrorMsg = setup2FA.error instanceof Error ? setup2FA.error.message : ''
+  const confirmErrorMsg = confirm2FA.error instanceof Error ? confirm2FA.error.message : ''
 
   return (
     <ModalOverlay onClose={handleClose}>
@@ -80,11 +90,22 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
         </div>
 
         <StepDots step={step} />
-        <ErrorBanner message={twoFAError} />
 
         {step === 'qr' && (
           <div className='space-y-4'>
-            {twoFALoading || !twoFASetup ? (
+            {setupErrorMsg && (
+              <div
+                className='px-4 py-3 rounded-2xl text-sm font-medium'
+                style={{
+                  background: 'rgba(239,68,68,0.07)',
+                  border: '2px solid rgba(239,68,68,0.18)',
+                  color: '#B91C1C'
+                }}
+              >
+                {setupErrorMsg}
+              </div>
+            )}
+            {setup2FA.isPending || !twoFASetup ? (
               <div className='flex flex-col items-center gap-3 py-8'>
                 <div
                   className='w-10 h-10 rounded-full border-4 animate-spin'
@@ -100,13 +121,11 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
                   Mở <strong style={{ color: 'var(--color-text)' }}>Google Authenticator</strong>, Authy hoặc app tương
                   tự rồi quét mã bên dưới:
                 </p>
-
                 <div className='flex justify-center'>
                   <div className='p-3 rounded-2xl' style={{ background: '#fff', boxShadow: 'var(--clay-shadow-sm)' }}>
                     <QRCodeSVG value={twoFASetup.otpauthUrl} size={176} level='M' marginSize={1} />
                   </div>
                 </div>
-
                 <div>
                   <p className='text-xs mb-1.5' style={{ color: 'var(--color-muted)' }}>
                     Không quét được? Nhập thủ công mã bí mật:
@@ -122,15 +141,11 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
                     {extractTotpSecret(twoFASetup.otpauthUrl)}
                   </div>
                 </div>
-
                 <div className='flex gap-3 pt-1'>
                   <button
                     onClick={() => setStep('otp')}
                     className='flex-1 py-2.5 rounded-xl text-sm font-bold text-white cursor-pointer transition-all'
-                    style={{
-                      background: 'var(--cta)',
-                      boxShadow: 'var(--clay-shadow-btn)'
-                    }}
+                    style={{ background: 'var(--cta)', boxShadow: 'var(--clay-shadow-btn)' }}
                   >
                     Tiếp theo →
                   </button>
@@ -149,6 +164,18 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
 
         {step === 'otp' && (
           <form onSubmit={handleSubmit(onConfirm)} className='space-y-4'>
+            {confirmErrorMsg && (
+              <div
+                className='px-4 py-3 rounded-2xl text-sm font-medium'
+                style={{
+                  background: 'rgba(239,68,68,0.07)',
+                  border: '2px solid rgba(239,68,68,0.18)',
+                  color: '#B91C1C'
+                }}
+              >
+                {confirmErrorMsg}
+              </div>
+            )}
             <p className='text-sm' style={{ color: 'var(--color-muted)' }}>
               Nhập mã 6 chữ số từ app xác thực để hoàn tất kích hoạt:
             </p>
@@ -165,14 +192,11 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
             <div className='flex gap-3 pt-1'>
               <button
                 type='submit'
-                disabled={twoFALoading}
+                disabled={confirm2FA.isPending}
                 className='flex-1 py-2.5 rounded-xl text-sm font-bold text-white cursor-pointer disabled:opacity-60 transition-all'
-                style={{
-                  background: 'var(--cta)',
-                  boxShadow: 'var(--clay-shadow-btn)'
-                }}
+                style={{ background: 'var(--cta)', boxShadow: 'var(--clay-shadow-btn)' }}
               >
-                {twoFALoading ? 'Đang kích hoạt...' : 'Xác nhận & kích hoạt'}
+                {confirm2FA.isPending ? 'Đang kích hoạt...' : 'Xác nhận & kích hoạt'}
               </button>
               <button
                 type='button'
@@ -191,7 +215,8 @@ function Setup2FAModal({ onClose }: { onClose: () => void }) {
 }
 
 function Disable2FAModal({ onClose }: { onClose: () => void }) {
-  const { twoFALoading, twoFAError, disable2FA } = useSettingsStore()
+  const mutation = useDisable2FAMutation()
+  const errorMsg = mutation.error instanceof Error ? mutation.error.message : ''
 
   const {
     control,
@@ -200,12 +225,13 @@ function Disable2FAModal({ onClose }: { onClose: () => void }) {
     formState: { errors }
   } = useForm<OtpFormValues>({ resolver: zodResolver(otpSchema), defaultValues: { otp: '' } })
 
-  const onSubmit = async ({ otp }: OtpFormValues) => {
-    await disable2FA(otp)
-    if (!useSettingsStore.getState().twoFAError) {
-      reset()
-      onClose()
-    }
+  const onSubmit = ({ otp }: OtpFormValues) => {
+    mutation.mutate(otp, {
+      onSuccess: () => {
+        reset()
+        onClose()
+      }
+    })
   }
 
   return (
@@ -229,7 +255,14 @@ function Disable2FAModal({ onClose }: { onClose: () => void }) {
           <ModalCloseBtn onClose={onClose} />
         </div>
 
-        <ErrorBanner message={twoFAError} />
+        {errorMsg && (
+          <div
+            className='px-4 py-3 rounded-2xl text-sm font-medium'
+            style={{ background: 'rgba(239,68,68,0.07)', border: '2px solid rgba(239,68,68,0.18)', color: '#B91C1C' }}
+          >
+            {errorMsg}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
           <p className='text-xs font-semibold' style={{ color: 'var(--color-text-2)' }}>
@@ -248,11 +281,11 @@ function Disable2FAModal({ onClose }: { onClose: () => void }) {
           <div className='flex gap-3 pt-1'>
             <button
               type='submit'
-              disabled={twoFALoading}
+              disabled={mutation.isPending}
               className='flex-1 py-2.5 rounded-xl text-sm font-bold text-white cursor-pointer disabled:opacity-60 transition-all'
               style={{ background: 'var(--color-down)', boxShadow: '0 4px 14px rgba(239,68,68,0.35)' }}
             >
-              {twoFALoading ? 'Đang xử lý...' : 'Xác nhận tắt'}
+              {mutation.isPending ? 'Đang xử lý...' : 'Xác nhận tắt'}
             </button>
             <button
               type='button'
@@ -273,6 +306,7 @@ export function TwoFASection() {
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showDisableModal, setShowDisableModal] = useState(false)
   const isTwoFAEnabled = useAuthStore((s) => s.user?.isTwoFactorEnabled ?? false)
+  const setTwoFASetup = useSettingsStore((s) => s.setTwoFASetup)
 
   return (
     <>
@@ -298,10 +332,7 @@ export function TwoFASection() {
               Đang bật
             </div>
             <button
-              onClick={() => {
-                useSettingsStore.setState({ twoFAError: '' })
-                setShowDisableModal(true)
-              }}
+              onClick={() => setShowDisableModal(true)}
               className='px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 cursor-pointer'
               style={{
                 color: 'var(--color-down)',
@@ -315,14 +346,11 @@ export function TwoFASection() {
         ) : (
           <button
             onClick={() => {
-              useSettingsStore.setState({ twoFAError: '', twoFASetup: null })
+              setTwoFASetup(null)
               setShowSetupModal(true)
             }}
             className='px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-150 cursor-pointer'
-            style={{
-              background: 'var(--cta)',
-              boxShadow: 'var(--clay-shadow-btn)'
-            }}
+            style={{ background: 'var(--cta)', boxShadow: 'var(--clay-shadow-btn)' }}
           >
             Thiết lập 2FA
           </button>

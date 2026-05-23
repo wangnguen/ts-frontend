@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff, AlertCircle } from 'lucide-react'
 import type { UseFormRegisterReturn, FieldError } from 'react-hook-form'
-import { useSettingsStore } from './store'
+import { usePasswordMutation } from './hooks'
 import { changePasswordSchema, type ChangePasswordInput } from '@lib/schemas/auth'
-import { ErrorBanner } from '../auth/components'
 import { SectionCard, SaveButton, ModalOverlay, ModalCloseBtn } from './components'
 
 interface PasswordInputProps {
@@ -72,7 +71,8 @@ function PasswordInput({ id, label, placeholder, error, registration }: Password
 }
 
 function ChangePasswordModal({ onClose }: { onClose: () => void }) {
-  const { passwordLoading, passwordError, submitPassword } = useSettingsStore()
+  const mutation = usePasswordMutation()
+  const errorMsg = mutation.error instanceof Error ? mutation.error.message : ''
 
   const {
     register,
@@ -81,12 +81,13 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
     formState: { errors }
   } = useForm<ChangePasswordInput>({ resolver: zodResolver(changePasswordSchema) })
 
-  const onSubmit = async (data: ChangePasswordInput) => {
-    await submitPassword(data)
-    if (!useSettingsStore.getState().passwordError) {
-      reset()
-      onClose()
-    }
+  const onSubmit = (data: ChangePasswordInput) => {
+    mutation.mutate(data, {
+      onSuccess: () => {
+        reset()
+        onClose()
+      }
+    })
   }
 
   return (
@@ -104,7 +105,18 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
           <ModalCloseBtn onClose={onClose} />
         </div>
 
-        <ErrorBanner message={passwordError} />
+        {errorMsg && (
+          <div
+            className='px-4 py-3 rounded-2xl text-sm font-medium'
+            style={{
+              background: 'rgba(239,68,68,0.07)',
+              border: '2px solid rgba(239,68,68,0.18)',
+              color: '#B91C1C'
+            }}
+          >
+            {errorMsg}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
           <PasswordInput
@@ -129,7 +141,7 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
             registration={register('confirmPassword')}
           />
           <div className='flex gap-3 pt-1'>
-            <SaveButton loading={passwordLoading} text='Đổi mật khẩu' />
+            <SaveButton loading={mutation.isPending} text='Đổi mật khẩu' />
             <button
               type='button'
               onClick={onClose}
@@ -150,24 +162,14 @@ export function PasswordSection() {
 
   return (
     <>
-      {showModal && (
-        <ChangePasswordModal
-          onClose={() => {
-            useSettingsStore.setState({ passwordError: '' })
-            setShowModal(false)
-          }}
-        />
-      )}
+      {showModal && <ChangePasswordModal onClose={() => setShowModal(false)} />}
 
       <SectionCard title='Đổi mật khẩu'>
         <p className='text-sm' style={{ color: 'var(--color-muted)' }}>
           Cập nhật mật khẩu để bảo vệ tài khoản của bạn.
         </p>
         <button
-          onClick={() => {
-            useSettingsStore.setState({ passwordError: '' })
-            setShowModal(true)
-          }}
+          onClick={() => setShowModal(true)}
           className='px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-150 cursor-pointer'
           style={{
             background: 'var(--cta)',
