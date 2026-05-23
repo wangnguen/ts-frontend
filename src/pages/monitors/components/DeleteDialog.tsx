@@ -1,9 +1,8 @@
 import { Trash2, Loader2 } from 'lucide-react'
-import { useMonitorsStore } from '../store'
+import { useMonitors } from '../hooks'
 
 export function DeleteDialog() {
-  const { showDeleteDialog, closeDeleteDialog, confirmDelete, isDeleting, monitors, deletingMonitorId } =
-    useMonitorsStore()
+  const { showDeleteDialog, closeDeleteDialog, confirmDelete, isDeleting, monitors, deletingMonitorId } = useMonitors()
 
   if (!showDeleteDialog) return null
 

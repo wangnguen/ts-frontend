@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { X, Loader2 } from 'lucide-react'
-import { useMonitorsStore } from '../store'
+import { useMonitors } from '../hooks'
 
 const monitorSchema = z.object({
   name: z.string().min(1, 'Tên không được trống'),
@@ -19,7 +19,7 @@ const monitorSchema = z.object({
 type MonitorFormValues = z.infer<typeof monitorSchema>
 
 export function MonitorModal() {
-  const { showModal, editingMonitor, closeModal, submitMonitor, isSaving } = useMonitorsStore()
+  const { showModal, editingMonitor, closeModal, submitMonitor, isSaving } = useMonitors()
 
   const {
     register,

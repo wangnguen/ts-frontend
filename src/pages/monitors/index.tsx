@@ -1,17 +1,12 @@
-import { useEffect } from 'react'
 import { Plus, Monitor as MonitorIcon, Loader2 } from 'lucide-react'
-import { useMonitorsStore } from './store'
+import { useMonitors } from './hooks'
 import { StatCard } from './components/StatCard'
 import { MonitorCard } from './components/MonitorCard'
 import { MonitorModal } from './components/MonitorModal'
 import { DeleteDialog } from './components/DeleteDialog'
 
 export default function MonitorsPage() {
-  const { monitors, total, isLoading, fetchMonitors, openCreateModal } = useMonitorsStore()
-
-  useEffect(() => {
-    fetchMonitors()
-  }, [fetchMonitors])
+  const { monitors, total, isLoading, openCreateModal } = useMonitors()
 
   const up = monitors.filter((m) => m.isActive && m.currentStatus === 'up').length
   const down = monitors.filter((m) => m.isActive && m.currentStatus === 'down').length

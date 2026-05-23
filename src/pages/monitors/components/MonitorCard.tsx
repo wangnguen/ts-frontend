@@ -1,5 +1,5 @@
 import { Pencil, Trash2, Pause, Play, Loader2 } from 'lucide-react'
-import { useMonitorsStore } from '../store'
+import { useMonitors } from '../hooks'
 import type { Monitor, MonitorType } from '@lib/types'
 
 const STATUS_CONFIG = {
@@ -30,7 +30,7 @@ function formatLastChecked(iso: string | null) {
 }
 
 export function MonitorCard({ monitor }: { monitor: Monitor }) {
-  const { openEditModal, openDeleteDialog, togglePause, isTogglingId } = useMonitorsStore()
+  const { openEditModal, openDeleteDialog, togglePause, isTogglingId } = useMonitors()
   const status = STATUS_CONFIG[monitor.currentStatus]
   const isToggling = isTogglingId === monitor.id
 
