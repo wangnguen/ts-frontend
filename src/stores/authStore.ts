@@ -28,6 +28,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setAuth: (data: AuthResponse) => {
     setAccessToken(data.accessToken)
+    localStorage.setItem('hasSession', '1')
     set({
       user: data.user,
       accessToken: data.accessToken,
@@ -47,6 +48,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     await authApi.logout().catch(() => {})
     setAccessToken(null)
+    localStorage.removeItem('hasSession')
     set({
       user: null,
       accessToken: null,
@@ -58,6 +60,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   initAuth: async () => {
+    if (!localStorage.getItem('hasSession')) {
+      set({ initialized: true })
+      return
+    }
     try {
       const { accessToken } = await authApi.refreshToken()
       setAccessToken(accessToken)
@@ -65,6 +71,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user, accessToken, isAuthenticated: true, initialized: true })
     } catch {
       setAccessToken(null)
+      localStorage.removeItem('hasSession')
       set({ user: null, accessToken: null, isAuthenticated: false, initialized: true })
     }
   }
