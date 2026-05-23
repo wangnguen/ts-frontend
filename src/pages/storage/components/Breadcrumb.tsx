@@ -1,8 +1,8 @@
 import { ChevronRight } from 'lucide-react'
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 
 export function Breadcrumb() {
-  const { currentPath, navigate } = useStorageStore()
+  const { currentPath, navigate } = useStorage()
   const parts = currentPath ? currentPath.split('/').filter(Boolean) : []
 
   return (

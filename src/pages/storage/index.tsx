@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
 import { FolderPlus, Folder, Loader2 } from 'lucide-react'
-import { useStorageStore } from './store'
+import { useStorage } from './hooks'
 import { Breadcrumb } from './components/Breadcrumb'
 import { FolderRow } from './components/FolderRow'
 import { FileRow } from './components/FileRow'
@@ -11,11 +10,7 @@ import { DeleteFileDialog } from './components/DeleteFileDialog'
 import { DeleteFolderDialog } from './components/DeleteFolderDialog'
 
 export default function StoragePage() {
-  const { files, folders, isLoading, reload, openCreateFolder } = useStorageStore()
-
-  useEffect(() => {
-    reload()
-  }, [reload])
+  const { files, folders, isLoading, openCreateFolder } = useStorage()
 
   const isEmpty = files.length === 0 && folders.length === 0
 

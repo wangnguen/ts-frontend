@@ -1,9 +1,9 @@
 import { useRef } from 'react'
 import { Upload, Loader2 } from 'lucide-react'
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 
 export function UploadZone() {
-  const { uploadFiles, isUploading } = useStorageStore()
+  const { uploadFiles, isUploading } = useStorage()
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleDrop = (e: React.DragEvent) => {

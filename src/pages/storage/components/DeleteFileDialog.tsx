@@ -1,8 +1,8 @@
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 import { SimpleDialog } from './SimpleDialog'
 
 export function DeleteFileDialog() {
-  const { showDeleteFileDialog, deletingFile, closeDeleteFile, confirmDeleteFile } = useStorageStore()
+  const { showDeleteFileDialog, deletingFile, closeDeleteFile, confirmDeleteFile } = useStorage()
 
   return (
     <SimpleDialog open={showDeleteFileDialog} onClose={closeDeleteFile} title='Xoá file?'>

@@ -1,9 +1,9 @@
 import { Folder, Trash2 } from 'lucide-react'
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 import type { StorageFolder } from '@lib/types'
 
 export function FolderRow({ folder }: { folder: StorageFolder }) {
-  const { navigate, openDeleteFolder } = useStorageStore()
+  const { navigate, openDeleteFolder } = useStorage()
   return (
     <div
       className='flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-150 group'

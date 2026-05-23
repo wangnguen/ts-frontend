@@ -1,5 +1,5 @@
 import { File, Pencil, Trash2 } from 'lucide-react'
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 import type { StorageFile } from '@lib/types'
 
 function formatFileSize(bytes: number) {
@@ -34,7 +34,7 @@ function extColor(ext: string) {
 }
 
 export function FileRow({ file }: { file: StorageFile }) {
-  const { openRename, openDeleteFile } = useStorageStore()
+  const { openRename, openDeleteFile } = useStorage()
   const ext = getFileExt(file.name)
   const color = extColor(ext)
 

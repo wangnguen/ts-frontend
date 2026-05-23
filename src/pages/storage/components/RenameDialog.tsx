@@ -1,8 +1,8 @@
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 import { SimpleDialog } from './SimpleDialog'
 
 export function RenameDialog() {
-  const { showRenameDialog, renamingFile, newFileName, closeRename, setNewFileName, confirmRename } = useStorageStore()
+  const { showRenameDialog, renamingFile, newFileName, closeRename, setNewFileName, confirmRename } = useStorage()
 
   return (
     <SimpleDialog open={showRenameDialog} onClose={closeRename} title={`Đổi tên: ${renamingFile?.name ?? ''}`}>

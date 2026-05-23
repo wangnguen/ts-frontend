@@ -1,8 +1,8 @@
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 import { SimpleDialog } from './SimpleDialog'
 
 export function DeleteFolderDialog() {
-  const { showDeleteFolderDialog, deletingFolder, closeDeleteFolder, confirmDeleteFolder } = useStorageStore()
+  const { showDeleteFolderDialog, deletingFolder, closeDeleteFolder, confirmDeleteFolder } = useStorage()
 
   return (
     <SimpleDialog open={showDeleteFolderDialog} onClose={closeDeleteFolder} title='Xoá thư mục?'>

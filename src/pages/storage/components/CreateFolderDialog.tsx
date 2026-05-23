@@ -1,9 +1,9 @@
-import { useStorageStore } from '../store'
+import { useStorage } from '../hooks'
 import { SimpleDialog } from './SimpleDialog'
 
 export function CreateFolderDialog() {
   const { showCreateFolderDialog, newFolderName, closeCreateFolder, setNewFolderName, confirmCreateFolder } =
-    useStorageStore()
+    useStorage()
 
   return (
     <SimpleDialog open={showCreateFolderDialog} onClose={closeCreateFolder} title='Tạo thư mục mới'>

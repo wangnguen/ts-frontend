@@ -1,8 +1,7 @@
-﻿import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+﻿import { useNavigate } from 'react-router-dom'
 import { Plus, Monitor as MonitorIcon, ArrowRight, Loader2 } from 'lucide-react'
 import { useAuthStore } from '@stores/authStore'
-import { useMonitorsStore } from '@pages/monitors/store'
+import { useMonitors } from '@pages/monitors/hooks'
 import type { Monitor, MonitorType } from '@lib/types'
 
 const STATUS_CONFIG = {
@@ -74,11 +73,7 @@ function MonitorRow({ monitor }: { monitor: Monitor }) {
 export default function DashboardPage() {
   const user = useAuthStore((s) => s.user)
   const navigate = useNavigate()
-  const { monitors, total, isLoading, fetchMonitors, openCreateModal } = useMonitorsStore()
-
-  useEffect(() => {
-    fetchMonitors()
-  }, [fetchMonitors])
+  const { monitors, total, isLoading, openCreateModal } = useMonitors()
 
   const up = monitors.filter((m) => m.isActive && m.currentStatus === 'up').length
   const down = monitors.filter((m) => m.isActive && m.currentStatus === 'down').length
